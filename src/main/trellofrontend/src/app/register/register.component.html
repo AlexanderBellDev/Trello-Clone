@@ -14,7 +14,7 @@
       <mat-form-field appearance="fill" color="accent">
         <mat-label>Last Name</mat-label>
         <input formControlName="surname" required matInput>
-        <mat-error *ngIf="regForm.get('firstName').invalid">Field is required</mat-error>
+        <mat-error *ngIf="regForm.get('surname').invalid">Field is required</mat-error>
       </mat-form-field>
     </div>
 
@@ -37,7 +37,7 @@
       <mat-form-field  appearance="fill" color="accent">
         <mat-label>Password</mat-label>
         <input required type="password" formControlName="password" matInput>
-        <mat-error *ngIf="regForm.get('firstName').invalid">Field is required</mat-error>
+        <mat-error *ngIf="regForm.get('password').invalid">Field is required</mat-error>
       </mat-form-field>
     </div>
 
@@ -60,19 +60,18 @@
       <mat-form-field appearance="fill" color="accent">
         <mat-label>Email</mat-label>
         <input required formControlName="email" type="email" matInput>
-        <!--        <mat-error *ngIf="f.email.errors">Field is required</mat-error>-->
+        <p *ngIf="emailValid">dddjdj</p>
         <mat-error *ngIf="f.email.errors && f.email.errors.required">Email is required</mat-error>
         <mat-error *ngIf="f.email.errors && f.email.errors.email">Email must be a valid email address</mat-error>
       </mat-form-field>
     </div>
 
 
-    <div formGroupName="address">
       <div class="form-group">
         <mat-form-field appearance="fill" color="accent">
           <mat-label>Address 1</mat-label>
           <input required formControlName="address1" matInput>
-          <mat-error *ngIf="regForm.get('firstName').invalid">Field is required</mat-error>
+          <mat-error *ngIf="regForm.get('address1').invalid">Field is required</mat-error>
         </mat-form-field>
       </div>
 
@@ -88,7 +87,7 @@
         <mat-form-field appearance="fill" color="accent">
           <mat-label>City</mat-label>
           <input required formControlName="city" matInput>
-          <mat-error *ngIf="regForm.get('firstName').invalid">Field is required</mat-error>
+          <mat-error *ngIf="regForm.get('city').invalid">Field is required</mat-error>
         </mat-form-field>
       </div>
 
@@ -96,10 +95,9 @@
         <mat-form-field appearance="fill" color="accent">
           <mat-label>Postal Code</mat-label>
           <input required formControlName="postalCode" matInput>
-          <mat-error *ngIf="regForm.get('firstName').invalid">Field is required</mat-error>
+          <mat-error *ngIf="regForm.get('postalCode').invalid">Field is required</mat-error>
         </mat-form-field>
       </div>
-    </div>
 
     <div class="reg-button-row">
       <button mat-raised-button color="primary" type="submit" [disabled]="!regForm.valid" (click)="onSubmit()">Register</button>
@@ -110,6 +108,3 @@
 
   </form>
 </div>
-
-
-
