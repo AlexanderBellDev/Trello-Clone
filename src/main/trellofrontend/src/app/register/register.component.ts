@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {
+  AbstractControl, EmailValidator,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm, ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material';
 import {User} from "../model/user";
 import {RegisterService} from "../service/register.service";
-
-class CrossFieldErrorMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return control.dirty && form.invalid;
-  }
-}
-
-
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {debounceTime, map} from "rxjs/operators";
+import {UserValidators} from "../user.validator";
 
 @Component({
   selector: 'app-register',
@@ -20,20 +25,23 @@ class CrossFieldErrorMatcher implements ErrorStateMatcher {
 export class RegisterComponent implements OnInit {
   user: User;
   emailValid = false;
-  errorMatcher = new CrossFieldErrorMatcher();
-  constructor(private formBuilder: FormBuilder, private registerService: RegisterService) { }
+  submitted = false;
+  constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private service:UserValidators) { }
+
+
+
   regForm = this.formBuilder.group({
-    username: [''],
+    email: ['', [Validators.required, Validators.email],this.service.emailValidator()],
+    username: ['', Validators.required, this.service.usernameValidator()],
     firstName: ['', [Validators.required]],
     surname: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]],
     address1: ['', [Validators.required]],
     address2: [''],
     city: ['', [Validators.required]],
     postalCode: ['', [Validators.required]],
-  }, {validator : [this.passwordValidator, this.emailValidator]});
+  }, {validator : [UserValidators.MatchPassword]});
 
   ngOnInit() {
   }
@@ -45,20 +53,18 @@ export class RegisterComponent implements OnInit {
     return condition ? { passwordsDoNotMatch: true} : null;
   }
 
+
   onSubmit() {
-    this.regForm.patchValue({
-      username: this.generateUsername()
-    });
     this.user = this.regForm.value;
+    this.user.username = this.user.username.toLowerCase();
+    this.user.email = this.user.email.toLowerCase();
     console.log(this.user);
     this.registerService.register(this.user).subscribe(data  => {
         console.log("POST Request is successful ", data);
+        this.submitted = true;
       },
       error  => {
         console.log("Error", error);
-        if(error.error === 'emailexists'){
-          this.emailValid = false;
-        }
       })
 
   }
