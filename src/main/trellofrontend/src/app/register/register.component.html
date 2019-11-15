@@ -1,6 +1,28 @@
 <div class="container" style="text-align: center">
-  <h2>Registration Form</h2>
-  <form [formGroup]="regForm" style="align-content: center" >
+  <h2 *ngIf="submitted">Thanks for signing up!</h2>
+
+  <h2 *ngIf="!submitted">Registration Form</h2>
+  <form *ngIf="!submitted" [formGroup]="regForm" style="align-content: center" >
+
+    <div class="form-group">
+      <mat-form-field appearance="fill" color="accent">
+        <mat-label>Username</mat-label>
+        <input required formControlName="username" type="text" matInput>
+        <mat-error *ngIf="f.username.errors && f.username.errors.required">Username is required</mat-error>
+        <mat-error   *ngIf="regForm.get('username').errors?.usernameExists">Username already exists</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="fill" color="accent">
+        <mat-label>Email</mat-label>
+        <input required formControlName="email" type="email" matInput>
+        <mat-error *ngIf="f.email.errors && f.email.errors.required">Email is required</mat-error>
+        <mat-error   *ngIf="regForm.get('email').errors?.emailExists">Email already exists</mat-error>
+        <mat-error *ngIf="f.email.errors && f.email.errors.email">Email must be a valid email address</mat-error>
+      </mat-form-field>
+    </div>
+
 
     <div class="form-group">
       <mat-form-field appearance="fill" color="accent">
@@ -18,21 +40,6 @@
       </mat-form-field>
     </div>
 
-
-    <!--    <div class="form-group">-->
-    <!--    <label>First Name</la bel>-->
-    <!--    <input [class.is-invalid]="regForm.get('firstName').invalid && regForm.get('firstName').touched"   formControlName="firstName" type="text" class="form-control">-->
-    <!--    <small class="text-danger" *ngIf="regForm.get('firstName').errors?.minlength && regForm.get('firstName').touched">firstName Should be three</small>-->
-    <!--    <small class="text-danger" *ngIf="regForm.get('firstName').errors?.required && regForm.get('firstName').touched">firstName is required</small>-->
-
-    <!--  </div>-->
-    <!--    <div class="form-group">-->
-    <!--      <label>Surname</label>-->
-    <!--      <input [class.is-invalid]="regForm.get('surname').invalid && regForm.get('surname').touched"   formControlName="surname" type="text" class="form-control">-->
-    <!--      <small class="text-danger" *ngIf="regForm.get('surname').errors?.minlength && regForm.get('surname').touched">surname Should be three</small>-->
-    <!--      <small class="text-danger" *ngIf="regForm.get('surname').errors?.required && regForm.get('surname').touched">surname is required</small>-->
-
-    <!--    </div>-->
     <div class="form-group">
       <mat-form-field  appearance="fill" color="accent">
         <mat-label>Password</mat-label>
@@ -44,27 +51,12 @@
     <div class="form-group">
       <mat-form-field  appearance="fill" color="accent">
         <mat-label>Confirm Password</mat-label>
-        <input required type="password" formControlName="confirmPassword" matInput [errorStateMatcher]="errorMatcher">
-        <mat-error *ngIf="regForm.hasError('passwordsDoNotMatch')">
-          Passwords do not match!
-        </mat-error>
+        <input required type="password" formControlName="confirmPassword" matInput>
+        <mat-error *ngIf="regForm.controls['confirmPassword'].pristine || regForm.controls['confirmPassword'].errors?.MatchPassword">Password does not match</mat-error>
       </mat-form-field>
     </div>
 
-    <!--    <div class="form-group">-->
-    <!--      <label>Email</label>-->
-    <!--      <input type="email" [class.is-invalid]="regForm.get('email').invalid && regForm.get('email').touched" formControlName="email" class="form-control">-->
-    <!--    </div>-->
 
-    <div class="form-group">
-      <mat-form-field appearance="fill" color="accent">
-        <mat-label>Email</mat-label>
-        <input required formControlName="email" type="email" matInput>
-        <p *ngIf="emailValid">dddjdj</p>
-        <mat-error *ngIf="f.email.errors && f.email.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="f.email.errors && f.email.errors.email">Email must be a valid email address</mat-error>
-      </mat-form-field>
-    </div>
 
 
       <div class="form-group">

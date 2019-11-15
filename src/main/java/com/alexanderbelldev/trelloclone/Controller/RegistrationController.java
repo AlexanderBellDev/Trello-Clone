@@ -19,11 +19,22 @@ public class RegistrationController {
     public ResponseEntity<?> register(@RequestBody User user){
        if(userService.saveUser(user)){
            return new ResponseEntity<>(user, HttpStatus.OK);
-       }else{
-           return new ResponseEntity<>("emailexists",HttpStatus.CONFLICT);
+       }else {
+           return new ResponseEntity<>("emailexists", HttpStatus.CONFLICT);
        }
-
-
     }
+    @GetMapping("/api/checkemail/{email}")
+    @CrossOrigin("http://localhost:4200")
+    public ResponseEntity<?> checkEmailExists(@PathVariable String email){
+      return new ResponseEntity<>(userService.checkEmailExists(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/checkusername/{username}")
+    @CrossOrigin("http://localhost:4200")
+    public ResponseEntity<?> checkUsernameExists(@PathVariable String username){
+        return new ResponseEntity<>(userService.checkUsernameExists(username), HttpStatus.OK);
+    }
+
+
 }
 

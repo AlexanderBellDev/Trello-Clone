@@ -18,4 +18,9 @@ public class User {
     String surname;
     String email;
     String password;
+    String address1;
+    String address2;
+    String city;
+    String postalCode;
+
 }

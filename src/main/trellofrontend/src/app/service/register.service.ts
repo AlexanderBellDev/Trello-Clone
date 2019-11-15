@@ -13,4 +13,5 @@ export class RegisterService {
   register(user){
     return this.http.post<User>(`http://localhost:8080/api/register`,user)
   }
+
 }
