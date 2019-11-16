@@ -15,6 +15,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
+import { UserhomeComponent } from './userhome/userhome.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {HttpClientModule} from "@angular/common/http";
     NavComponent,
     RegisterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    UserhomeComponent
   ],
   imports: [
     BrowserModule,

@@ -9,4 +9,5 @@ public interface UserService {
 
     List<String> checkEmailExists(String email);
     List<String> checkUsernameExists(String username);
+    boolean checkLogin(String username, String password);
 }
