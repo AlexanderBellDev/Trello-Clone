@@ -16,6 +16,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {debounceTime, map} from "rxjs/operators";
 import {UserValidators} from "../user.validator";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,8 @@ export class RegisterComponent implements OnInit {
   user: User;
   emailValid = false;
   submitted = false;
-  constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private service:UserValidators) { }
+  constructor(private formBuilder: FormBuilder, private registerService: RegisterService,
+              private router: Router, private service:UserValidators) { }
 
 
 
@@ -36,11 +38,7 @@ export class RegisterComponent implements OnInit {
     firstName: ['', [Validators.required]],
     surname: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', [Validators.required]],
-    address1: ['', [Validators.required]],
-    address2: [''],
-    city: ['', [Validators.required]],
-    postalCode: ['', [Validators.required]],
+    confirmPassword: ['', [Validators.required]]
   }, {validator : [UserValidators.MatchPassword]});
 
   ngOnInit() {
@@ -62,6 +60,10 @@ export class RegisterComponent implements OnInit {
     this.registerService.register(this.user).subscribe(data  => {
         console.log("POST Request is successful ", data);
         this.submitted = true;
+        setTimeout(() => {
+          this.registerService.username = this.user.username;
+          this.router.navigate(['login']);
+        }, 1500);  //3s
       },
       error  => {
         console.log("Error", error);

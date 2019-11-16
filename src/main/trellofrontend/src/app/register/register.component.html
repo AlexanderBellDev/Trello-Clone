@@ -1,5 +1,5 @@
 <div class="container" style="text-align: center">
-  <h2 *ngIf="submitted">Thanks for signing up!</h2>
+  <div *ngIf="submitted"><h3>Thanks for signing up!</h3> <br> <br> <h4>Redirecting to login page</h4></div>
 
   <h2 *ngIf="!submitted">Registration Form</h2>
   <form *ngIf="!submitted" [formGroup]="regForm" style="align-content: center" >
@@ -55,41 +55,6 @@
         <mat-error *ngIf="regForm.controls['confirmPassword'].pristine || regForm.controls['confirmPassword'].errors?.MatchPassword">Password does not match</mat-error>
       </mat-form-field>
     </div>
-
-
-
-
-      <div class="form-group">
-        <mat-form-field appearance="fill" color="accent">
-          <mat-label>Address 1</mat-label>
-          <input required formControlName="address1" matInput>
-          <mat-error *ngIf="regForm.get('address1').invalid">Field is required</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field appearance="fill" color="accent">
-          <mat-label>Address 2</mat-label>
-          <input formControlName="address2" matInput>
-        </mat-form-field>
-      </div>
-
-
-      <div class="form-group">
-        <mat-form-field appearance="fill" color="accent">
-          <mat-label>City</mat-label>
-          <input required formControlName="city" matInput>
-          <mat-error *ngIf="regForm.get('city').invalid">Field is required</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="form-group">
-        <mat-form-field appearance="fill" color="accent">
-          <mat-label>Postal Code</mat-label>
-          <input required formControlName="postalCode" matInput>
-          <mat-error *ngIf="regForm.get('postalCode').invalid">Field is required</mat-error>
-        </mat-form-field>
-      </div>
 
     <div class="reg-button-row">
       <button mat-raised-button color="primary" type="submit" [disabled]="!regForm.valid" (click)="onSubmit()">Register</button>

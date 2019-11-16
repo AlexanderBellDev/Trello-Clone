@@ -7,6 +7,6 @@ import java.util.List;
 public interface UserService {
     boolean saveUser(User user);
 
-    List<User> checkEmailExists(String email);
-    List<User> checkUsernameExists(String username);
+    List<String> checkEmailExists(String email);
+    List<String> checkUsernameExists(String username);
 }
