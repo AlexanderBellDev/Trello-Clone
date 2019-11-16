@@ -5,6 +5,7 @@ import com.alexanderbelldev.trelloclone.Repository.UserRepository;
 import com.alexanderbelldev.trelloclone.Service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,14 +22,21 @@ userRepository.save(user);
         return true;
     }
 
-    public List<User> checkEmailExists(String email) {
-        System.out.println(userRepository.findAllByEmail(email));
-     return userRepository.findAllByEmail(email);
+    public List<String> checkEmailExists(String email) {
+        if(userRepository.findAllByEmail(email).isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return Collections.singletonList("exists");
+        }
     }
 
-    public List<User> checkUsernameExists(String username) {
+    public List<String> checkUsernameExists(String username) {
         System.out.println(userRepository.findAllByUsername(username));
-        return userRepository.findAllByUsername(username);
+        if(userRepository.findAllByUsername(username).isEmpty()){
+            return Collections.emptyList();
+        }else{
+            return Collections.singletonList("exists");
+        }
     }
 }
 

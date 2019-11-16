@@ -16,7 +16,7 @@ export class UserValidators {
   searchUsername(text) {
    text = text.toLowerCase();
     // debounce
-    return timer(500)
+    return timer(200)
       .pipe(
         switchMap(() => {
           // Check if username is available
@@ -43,7 +43,7 @@ export class UserValidators {
   searchUserEmail(text) {
     text = text.toLowerCase();
     // debounce
-    return timer(500)
+    return timer(200)
       .pipe(
         switchMap(() => {
           // Check if username is available
