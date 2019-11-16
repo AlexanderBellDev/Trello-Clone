@@ -38,5 +38,9 @@ userRepository.save(user);
             return Collections.singletonList("exists");
         }
     }
+
+    public boolean checkLogin(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password) != null;
+    }
 }
 

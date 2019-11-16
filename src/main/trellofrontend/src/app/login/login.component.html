@@ -1,7 +1,10 @@
 
 
 <div class="container" style="text-align: center">
+  <div *ngIf="usererror" class="alert alert-warning"><h2>Error!</h2></div>
   <h2>Login Form</h2>
+
+
   <form [formGroup]="loginForm" style="align-content: center" autocomplete="off">
 
     <div class="form-group">
@@ -27,7 +30,6 @@
   </form>
 </div>
 
-{{loginForm.value | json}}
 
 
 
