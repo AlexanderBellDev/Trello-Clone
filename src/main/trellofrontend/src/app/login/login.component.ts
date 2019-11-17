@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.loginService.checkUser(this.user).subscribe(data  => {
         console.log("POST Request is successful ", data);
         sessionStorage.setItem('authenticatedUser', this.user.username);
-        this.route.navigate(['userhome']);
+        this.route.navigate(['board']);
       },
       error  => {
         console.log("Error", error);
