@@ -6,6 +6,8 @@ gradle/wrapper
 !**/src/main/**
 !**/src/test/**
 
+package-lock.json
+
 ### STS ###
 .apt_generated
 .classpath
