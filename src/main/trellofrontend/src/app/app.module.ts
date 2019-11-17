@@ -15,7 +15,8 @@ import {MatIconModule} from "@angular/material/icon";
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
-import { UserhomeComponent } from './userhome/userhome.component';
+import { BoardComponent } from './board/board.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { UserhomeComponent } from './userhome/userhome.component';
     RegisterComponent,
     HomeComponent,
     LoginComponent,
-    UserhomeComponent
+    BoardComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,8 @@ import { UserhomeComponent } from './userhome/userhome.component';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

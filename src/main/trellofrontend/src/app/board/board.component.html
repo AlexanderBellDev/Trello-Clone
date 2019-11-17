@@ -1,0 +1,52 @@
+<ng-container cdkDropListGroup>
+  <div class="example-container" style="margin-left: 4rem">
+    <h2 style="margin-left: 2rem">To do</h2>
+
+    <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2 style="margin-left: 2rem">Doing</h2>
+
+    <div cdkDropList [cdkDropListData]="doing" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of doing" cdkDrag>{{item}}</div>
+      <div class="addItem" (click)="addItem()">Add item</div>
+      <div *ngIf="addItemSelected" class="addItemContent">
+        <h4>&nbsp;Add item</h4>
+          <form [formGroup]="addItemForm" autocomplete="off">
+            <div class="form-group">
+              <mat-form-field  style="margin-left: -10rem; width: 300%" appearance="fill" color="accent">
+                <mat-label>Item Name</mat-label>
+                <input formControlName="itemName" required matInput>
+                <mat-error *ngIf="addItemForm.get('itemName').invalid">Field is required</mat-error>
+              </mat-form-field>
+              <br>
+
+            </div>
+
+          </form>
+
+
+
+
+        <button mat-raised-button style="text-align: center;" color="primary" type="submit" [disabled]="!addItemForm.valid" (click)="addItemContent()">Submit</button>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container">
+    <h2 style="margin-left: 2rem">Done</h2>
+
+    <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
