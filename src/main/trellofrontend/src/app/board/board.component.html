@@ -1,5 +1,5 @@
-<ng-container cdkDropListGroup>
-  <div class="example-container" style="margin-left: 4rem">
+<div cdkDropListGroup style="margin-left: 3rem">
+  <div class="example-container">
     <h2 style="margin-left: 2rem">To do</h2>
 
     <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
@@ -17,20 +17,14 @@
         <h4>&nbsp;Add item</h4>
           <form [formGroup]="addItemForm" autocomplete="off">
             <div class="form-group">
-              <mat-form-field  style="margin-left: -10rem; width: 300%" appearance="fill" color="accent">
+              <mat-form-field  style="margin-right: 27rem; width: 100%" appearance="fill" color="accent">
                 <mat-label>Item Name</mat-label>
                 <input formControlName="itemName" required matInput>
                 <mat-error *ngIf="addItemForm.get('itemName').invalid">Field is required</mat-error>
               </mat-form-field>
               <br>
-
             </div>
-
           </form>
-
-
-
-
         <button mat-raised-button style="text-align: center;" color="primary" type="submit" [disabled]="!addItemForm.valid" (click)="addItemContent()">Submit</button>
         <br>
       </div>
@@ -44,7 +38,7 @@
       <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
     </div>
   </div>
-</ng-container>
+</div>
 
 
 <!-- Copyright 2019 Google LLC. All Rights Reserved.
