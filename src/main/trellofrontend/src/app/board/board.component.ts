@@ -56,4 +56,9 @@ export class BoardComponent implements OnInit {
  this.addItemForm.reset();
 
   }
+
+  cancelAddItemContent() {
+    this.addItemForm.reset();
+    this.addItemSelected = false;
+  }
 }

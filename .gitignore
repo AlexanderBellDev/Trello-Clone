@@ -6,6 +6,9 @@ gradle/wrapper
 !**/src/main/**
 !**/src/test/**
 
+gradlew
+gradlew.bat
+
 package-lock.json
 
 ### STS ###

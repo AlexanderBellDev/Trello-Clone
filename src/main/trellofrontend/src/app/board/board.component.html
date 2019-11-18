@@ -1,9 +1,9 @@
-<div cdkDropListGroup style="margin-left: 3rem">
+<div cdkDropListGroup style="margin-left: 5%">
   <div class="example-container">
     <h2 style="margin-left: 2rem">To do</h2>
 
     <div cdkDropList [cdkDropListData]="todo" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+      <div class="box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
     </div>
   </div>
 
@@ -11,8 +11,8 @@
     <h2 style="margin-left: 2rem">Doing</h2>
 
     <div cdkDropList [cdkDropListData]="doing" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of doing" cdkDrag>{{item}}</div>
-      <div class="addItem" (click)="addItem()">Add item</div>
+      <div class="box" *ngFor="let item of doing" cdkDrag>{{item}}</div>
+      <div *ngIf="!addItemSelected" class="addItem" (click)="addItem()">Add item</div>
       <div *ngIf="addItemSelected" class="addItemContent">
         <h4>&nbsp;Add item</h4>
           <form [formGroup]="addItemForm" autocomplete="off">
@@ -25,7 +25,16 @@
               <br>
             </div>
           </form>
-        <button mat-raised-button style="text-align: center;" color="primary" type="submit" [disabled]="!addItemForm.valid" (click)="addItemContent()">Submit</button>
+      <div class="btn-toolbar">
+        <div class="btn-group" role="group">
+          <button mat-raised-button style="text-align: center;" color="primary" type="submit" [disabled]="!addItemForm.valid" (click)="addItemContent()">Submit</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button mat-raised-button style="text-align: center;" color="primary" type="submit" (click)="cancelAddItemContent()">Cancel</button>
+        </div>
+
+
+      </div>
         <br>
       </div>
     </div>
@@ -35,7 +44,7 @@
     <h2 style="margin-left: 2rem">Done</h2>
 
     <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      <div class="box" *ngFor="let item of done" cdkDrag>{{item}}</div>
     </div>
   </div>
 </div>
