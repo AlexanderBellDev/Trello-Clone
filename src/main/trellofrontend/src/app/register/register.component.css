@@ -12,11 +12,11 @@ input:-webkit-autofill:active {
   transition: all 0s 50000s;
   -webkit-text-fill-color: white !important;
 }
-.example-container {
+.board-container {
   display: flex;
   flex-direction: column;
 }
 
-.example-container > * {
+.board-container > * {
   width: 100%;
 }
