@@ -1,17 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {FormBuilder, Validators} from "@angular/forms";
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-  addItemForm = this.formBuilder.group({
+  addToDoItemForm = this.formBuilder.group({
     itemName: ['', [Validators.required]]
   });
-  addItemSelected: boolean;
-  constructor(private formBuilder: FormBuilder) { }
+  addDoingItemForm = this.formBuilder.group({
+    itemName: ['', [Validators.required]]
+  });
+  addDoneItemForm = this.formBuilder.group({
+    itemName: ['', [Validators.required]]
+  });
+  addItemDoingSelected: boolean;
+  addItemToDoSelected: boolean;
+  addItemDoneSelected: boolean;
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
   }
@@ -24,7 +34,7 @@ export class BoardComponent implements OnInit {
   ];
 
   doing = [
-   'Make java app'
+    'Make java app'
   ];
 
   done = [
@@ -46,19 +56,59 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  addItem() {
-  this.addItemSelected = true;
+  addItemDoing() {
+    this.addItemDoingSelected = true;
   }
-  get f() { return this.addItemForm.controls; }
-  addItemContent() {
-    this.addItemSelected = false;
-    this.doing.push(this.addItemForm.value.itemName);
- this.addItemForm.reset();
-
+  addItemToDo() {
+  this.addItemToDoSelected = true;
+  }
+  addItemDone() {
+    this.addItemDoneSelected = true;
   }
 
-  cancelAddItemContent() {
-    this.addItemForm.reset();
-    this.addItemSelected = false;
+  // get f() {
+  //   return this.addItemForm.controls;
+  // }
+
+  addToDoItemContent() {
+    this.addItemToDoSelected = false;
+    this.todo.push(this.addToDoItemForm.value.itemName);
+    this.addToDoItemForm.reset();
+  }
+  cancelToDoAddItemContent() {
+    this.addToDoItemForm.reset();
+    this.addItemToDoSelected = false;
+  }
+
+
+  addDoingItemContent() {
+    this.addItemDoingSelected = false;
+    this.doing.push(this.addDoingItemForm.value.itemName);
+    this.addDoingItemForm.reset();
+  }
+  cancelDoingAddItemContent() {
+    this.addDoingItemForm.reset();
+    this.addItemDoingSelected = false;
+  }
+
+  addDoneItemContent() {
+    this.addItemDoneSelected = false;
+    this.done.push(this.addDoneItemForm.value.itemName);
+    this.addDoneItemForm.reset();
+  }
+  cancelDoneAddItemContent() {
+    this.addDoneItemForm.reset();
+    this.addItemDoneSelected = false;
+  }
+
+
+  deleteToDoItem(item: number) {
+  this.todo.splice(item,1);
+  }
+  deleteDoingItem(item: number) {
+    this.doing.splice(item,1);
+  }
+  deleteDoneItem(item: number) {
+    this.done.splice(item,1);
   }
 }
