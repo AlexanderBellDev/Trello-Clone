@@ -13,4 +13,8 @@ export class ItemService {
   getItems(username){
       return this.http.get<Items[]>(`http://localhost:8080/api/getItems/${username}`)
   }
+  saveItem(item){
+    return this.http.post<Items[]>(`http://localhost:8080/api/updateItem`,item)
+  }
+
 }
