@@ -5,7 +5,7 @@ export class Items {
   itemName: string;
   columnName: string;
   itemDetail: string;
-  index: number;
+  indexNum: number;
 
 
   constructor(id: number, username: string, itemName: string, columnName: string, itemDetail: string) {

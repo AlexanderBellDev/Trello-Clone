@@ -29,7 +29,7 @@ export class BoardComponent implements OnInit {
   todo: Items[] = [];
   doing: Items[] = [];
   done: Items[] = [];
-
+  itemsArray: Items[] = [];
   items: Items[] = [];
 
   ngOnInit() {
@@ -55,50 +55,13 @@ export class BoardComponent implements OnInit {
 
   }
 
-  item: Items;
-
-
   drop(event: CdkDragDrop<Items[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      if (event.previousContainer.id === 'todo') {
-        this.item = this.todo[event.previousIndex];
-        console.log(this.item);
-        if (event.container.id === 'doing') {
-          this.item.columnName = 'doing';
-          this.item.index = event.currentIndex;
-        }
-        if(event.container.id === 'done'){
-          this.item.columnName = 'done';
-          this.item.index = event.currentIndex;
-        }
-        console.log(this.item);
-      }else if (event.previousContainer.id === 'doing') {
-        this.item = this.doing[event.previousIndex];
-        if (event.container.id === 'todo') {
-          this.item.columnName = 'todo';
-          this.item.index = event.currentIndex;
-        }
-        if(event.container.id === 'done'){
-          this.item.columnName = 'done';
-          this.item.index = event.currentIndex;
-        }
-        console.log(this.item);
-      }else if (event.previousContainer.id === 'done') {
-        this.item = this.done[event.previousIndex];
-        if (event.container.id === 'todo') {
-          this.item.columnName = 'todo';
-          this.item.index = event.currentIndex;
-        }
-        if(event.container.id === 'doing'){
-          this.item.columnName = 'doing';
-          this.item.index = event.currentIndex;
-        }
-        console.log(this.item);
-      }
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
+    this.saveColumn();
   }
 
   addItemDoing() {
@@ -111,6 +74,37 @@ export class BoardComponent implements OnInit {
 
   addItemDone() {
     this.addItemDoneSelected = true;
+  }
+
+  saveColumn() {
+
+      this.todo.forEach((item, index) => {
+        item.columnName = 'ToDo';
+        item.indexNum = index;
+        this.itemsArray.push(item);
+        //this.saveItem(item);
+      });
+      this.doing.forEach((item, index) => {
+        item.columnName = 'Doing';
+        item.indexNum = index;
+        this.itemsArray.push(item);
+      //  this.saveItem(item);
+      });
+        this.done.forEach((item, index) => {
+          item.columnName = 'Done';
+          item.indexNum = index;
+          this.itemsArray.push(item);
+       //   this.saveItem(item);
+        });
+        this.saveItem(this.itemsArray);
+  }
+
+  saveItem(item){
+    this.itemsService.saveItem(item).subscribe(data  => {
+      },
+      error  => {
+        console.log("Error", error);
+      })
   }
 
   // get f() {

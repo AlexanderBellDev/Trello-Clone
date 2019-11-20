@@ -3,6 +3,7 @@ package com.alexanderbelldev.trelloclone.Service.Impl;
 import com.alexanderbelldev.trelloclone.Model.Items;
 import com.alexanderbelldev.trelloclone.Repository.ItemRepository;
 import com.alexanderbelldev.trelloclone.Service.ItemService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,5 +18,9 @@ public class ItemServiceImpl implements ItemService {
 
     public List<Items> getItems(String username) {
       return itemRepository.findAllByUsernameOrderByIndexNumAsc(username);
+    }
+
+    public Items saveItem(Items item) {
+        return itemRepository.save(item);
     }
 }
