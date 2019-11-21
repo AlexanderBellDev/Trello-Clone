@@ -3,6 +3,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import {FormBuilder, Validators} from "@angular/forms";
 import {ItemService} from "../service/item.service";
 import {Items} from "../model/items";
+import {ItemDetailComponent} from "../item-detail/item-detail.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-board',
@@ -23,7 +25,7 @@ export class BoardComponent implements OnInit {
   addItemToDoSelected: boolean;
   addItemDoneSelected: boolean;
 
-  constructor(private formBuilder: FormBuilder, private itemsService: ItemService) {
+  constructor(private formBuilder: FormBuilder, private itemsService: ItemService, public dialog: MatDialog) {
   }
 
   todo: Items[] = [];
@@ -156,5 +158,20 @@ export class BoardComponent implements OnInit {
 
   deleteDoneItem(item: number) {
     this.done.splice(item, 1);
+  }
+
+
+  openDialog(item: Items): void {
+    const dialogRef = this.dialog.open(ItemDetailComponent, {
+      width: '800px',
+      height: '420px',
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+
   }
 }

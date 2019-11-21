@@ -17,6 +17,8 @@ import { LoginComponent } from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BoardComponent } from './board/board.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { ItemDetailComponent } from './item-detail/item-detail.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     RegisterComponent,
     HomeComponent,
     LoginComponent,
-    BoardComponent
+    BoardComponent,
+    ItemDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,11 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatIconModule,
     MatButtonModule,
     HttpClientModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    ItemDetailComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
