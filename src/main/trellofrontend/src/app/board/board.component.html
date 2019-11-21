@@ -2,7 +2,7 @@
   <div class="board-container">
     <h2 style="margin-left: 2rem">To do</h2>
     <div cdkDropList id="todo" [cdkDropListData]="todo" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" *ngFor="let item of todo ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteToDoItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+      <div class="box" (click)="openDialog(item)" *ngFor="let item of todo ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteToDoItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
     </div>
     <div *ngIf="!addItemToDoSelected" class="addItem" (click)="addItemToDo()"><h4>Add Item</h4></div>
     <div *ngIf="addItemToDoSelected" class="addItemContent">

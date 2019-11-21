@@ -1,0 +1,35 @@
+<h2 style="text-align: center; margin-top: -5px">Item Detail</h2>
+
+<div>
+  <form [formGroup]="itemDetailForm" style="align-content: center" autocomplete="off">
+
+      <h2>Item Name:</h2>
+    <div *ngIf="!nameFlag">
+      <p (click)="nameFlag = true">{{itemDetailForm.get('itemName').value}}</p>
+    </div>
+    <div *ngIf="nameFlag" class="form-group">
+      <mat-form-field appearance="fill" color="accent" class="full-width-field">
+        <input formControlName="itemName" type="text" required matInput>
+        <mat-error *ngIf="itemDetailForm.get('itemName').invalid">Field is required</mat-error>
+      </mat-form-field>
+    </div>
+    <h2>Item Description:</h2>
+    <div *ngIf="!detailFlag">
+      <p (click)="detailFlag = true">{{itemDetailForm.get('itemDetail').value}}</p>
+    </div>
+
+    <div *ngIf="detailFlag" class="form-group">
+      <mat-form-field color="accent" class="full-width-field">
+        <textarea matInput formControlName="itemDetail"></textarea>
+      </mat-form-field>
+    </div>
+
+    <br>
+
+  </form>
+
+
+</div>
+<div style="justify-content: center; justify-items: center; text-align: center">
+  <button class="btn-lg" mat-raised-button color="primary" type="submit" [disabled]="!itemDetailForm.valid" (click)="onSubmit()">Submit Changes</button>
+</div>
