@@ -4,7 +4,7 @@ import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { map, switchMap  } from 'rxjs/operators';
 
-const URL = 'http://localhost:8080';
+const URL = 'https://trelloclone.cfapps.io';
 
 @Injectable({
   providedIn: 'root'
