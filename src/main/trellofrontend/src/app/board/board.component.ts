@@ -112,6 +112,17 @@ export class BoardComponent implements OnInit {
   }
   saveItem(item){
     this.itemsService.saveItem(item).subscribe(data  => {
+      this.newItem = data;
+      if(this.newItem.columnName === 'ToDo'){
+        this.todo.push(this.newItem);
+        this.addToDoItemForm.reset();
+      }else if(this.newItem.columnName === 'Doing'){
+        this.doing.push(this.newItem);
+        this.addDoingItemForm.reset();
+      }else if(this.newItem.columnName === 'Done'){
+        this.done.push(this.newItem);
+        this.addDoneItemForm.reset();
+      }
       },
       error  => {
         console.log("Error", error);
@@ -126,9 +137,7 @@ export class BoardComponent implements OnInit {
     this.indexNumber = this.todo.length;
     this.addItemToDoSelected = false;
     this.newItem = new Items('Alex',this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
-    this.todo.push(this.newItem);
     this.saveItem(this.newItem);
-    this.addToDoItemForm.reset();
   }
 
   cancelToDoAddItemContent() {
@@ -140,11 +149,9 @@ export class BoardComponent implements OnInit {
   addDoingItemContent() {
     this.indexNumber = this.doing.length;
     this.addItemDoingSelected = false;
-    this.newItem = new Items('Alex',this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber)
-    this.doing.push(this.newItem);
+    this.newItem = new Items('Alex',this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
     this.saveItem(this.newItem);
-    this.addDoingItemForm.reset();
-    console.log(this.doing)
+
   }
 
   cancelDoingAddItemContent() {
@@ -156,10 +163,7 @@ export class BoardComponent implements OnInit {
     this.indexNumber = this.done.length;
     this.addItemDoneSelected = false;
     this.newItem = new Items('Alex',this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
-    this.done.push(this.newItem);
     this.saveItem(this.newItem);
-    console.log(this.done);
-    this.addDoneItemForm.reset();
   }
 
   cancelDoneAddItemContent() {
@@ -202,7 +206,15 @@ export class BoardComponent implements OnInit {
   }
 
 
-  openDialog(item: Items): void {
+  openDialog(item:Items) {
+    if(item.columnName === 'ToDo'){
+      item = this.todo[item.indexNum];
+      console.log('item is now' + item.id);
+    }else if(item.columnName === 'Doing'){
+      item = this.doing[item.indexNum];
+    }else if(item.columnName === 'Done'){
+      item =  this.done[item.indexNum];
+    }
     const dialogRef = this.dialog.open(ItemDetailComponent, {
       width: '800px',
       height: '420px',
@@ -211,13 +223,12 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-
        this.newItem = result;
        if(this.newItem.columnName === 'ToDo'){
          this.todo[this.newItem.indexNum] = this.newItem;
-       }else if(this.newItem.columnName === 'doing'){
-         this.doing[this.newItem.columnName] = this.newItem;
-       }else if(this.newItem.columnName === 'done'){
+       }else if(this.newItem.columnName === 'Doing'){
+         this.doing[this.newItem.indexNum] = this.newItem;
+       }else if(this.newItem.columnName === 'Done'){
          this.done[this.newItem.indexNum] = this.newItem;
        }
       console.log(this.newItem)

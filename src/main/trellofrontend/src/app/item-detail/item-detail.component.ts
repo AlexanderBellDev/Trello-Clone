@@ -17,7 +17,10 @@ export class ItemDetailComponent implements OnInit {
     public dialogRef: MatDialogRef<ItemDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data:Items,
     private formBuilder: FormBuilder, private itemService: ItemService) {
-
+    this.dialogRef.backdropClick().subscribe(_ => {
+      this.itemDetail = this.itemFromDB;
+      this.dialogRef.close(this.itemDetail);
+    })
   }
 
     itemFromDB: Items;
