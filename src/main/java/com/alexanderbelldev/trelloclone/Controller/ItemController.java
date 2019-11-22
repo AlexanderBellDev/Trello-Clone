@@ -24,6 +24,12 @@ public class ItemController {
         return itemService.getItems(username);
     }
 
+    @GetMapping("/api/getItemDetail/{itemID}")
+    @CrossOrigin("http://localhost:4200")
+    public Items getSingleItem(@PathVariable Integer itemID){
+        return itemService.getItemByID(itemID);
+    }
+
 
     @PostMapping("/api/updateItem")
     @CrossOrigin("http://localhost:4200")
@@ -34,5 +40,23 @@ public class ItemController {
             }
         }
         return new ResponseEntity<>(Item, HttpStatus.OK);
+    }
+    @PostMapping("/api/updateItemSingle")
+    @CrossOrigin("http://localhost:4200")
+    public ResponseEntity<?> updateItemSingle(@RequestBody Items item){
+        System.out.println(item.toString());
+            if(itemService.saveItem(item).getId() == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        return new ResponseEntity<>(item, HttpStatus.OK);
+    }
+    @PostMapping("/api/deleteItemSingle")
+    @CrossOrigin("http://localhost:4200")
+    public ResponseEntity<?> deleteItemSingle(@RequestBody Items item){
+        System.out.println(item.toString());
+       if( itemService.deleteItem(item)){
+           return new ResponseEntity<>(HttpStatus.OK);
+       }
+       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,6 +1,6 @@
 export class Items {
 
-  id: number;
+  id?: number;
   username: string;
   itemName: string;
   columnName: string;
@@ -8,11 +8,11 @@ export class Items {
   indexNum: number;
 
 
-  constructor(id: number, username: string, itemName: string, columnName: string, itemDetail: string) {
-    this.id = id;
+  constructor(username: string, itemName: string, columnName: string, itemDetail: string, indexNum: number) {
     this.username = username;
     this.itemName = itemName;
     this.columnName = columnName;
     this.itemDetail = itemDetail;
+    this.indexNum = indexNum;
   }
 }
