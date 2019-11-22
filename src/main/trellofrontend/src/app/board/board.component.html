@@ -37,7 +37,7 @@
     <h2 style="margin-left: 2rem">Doing</h2>
 
     <div cdkDropList id="doing" [cdkDropListData]="doing" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" *ngFor="let item of doing ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoingItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+      <div class="box" (click)="openDialog(item)"  *ngFor="let item of doing ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoingItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
     </div>
 
     <div *ngIf="!addItemDoingSelected" class="addItem" (click)="addItemDoing()"><h4>Add item</h4></div>
@@ -73,7 +73,7 @@
     <h2 style="margin-left: 2rem">Done</h2>
 
     <div cdkDropList id="done" [cdkDropListData]="done" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" *ngFor="let item of done ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoneItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+      <div class="box" (click)="openDialog(item)"  *ngFor="let item of done ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoneItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
     </div>
     <div *ngIf="!addItemDoneSelected" class="addItem" (click)="addItemDone()"><h4>Add item</h4></div>
     <div *ngIf="addItemDoneSelected" class="addItemContent">

@@ -33,6 +33,8 @@ export class BoardComponent implements OnInit {
   done: Items[] = [];
   itemsArray: Items[] = [];
   items: Items[] = [];
+  private indexNumber: number;
+  private newItem: Items;
 
   ngOnInit() {
     this.itemsService.getItems('Alex').subscribe(data => {
@@ -98,9 +100,16 @@ export class BoardComponent implements OnInit {
           this.itemsArray.push(item);
        //   this.saveItem(item);
         });
-        this.saveItem(this.itemsArray);
+        this.saveItems(this.itemsArray);
   }
 
+  saveItems(item){
+    this.itemsService.saveItems(item).subscribe(data  => {
+      },
+      error  => {
+        console.log("Error", error);
+      })
+  }
   saveItem(item){
     this.itemsService.saveItem(item).subscribe(data  => {
       },
@@ -114,8 +123,11 @@ export class BoardComponent implements OnInit {
   // }
 
   addToDoItemContent() {
+    this.indexNumber = this.todo.length;
     this.addItemToDoSelected = false;
-    this.todo.push(this.addToDoItemForm.value.itemName);
+    this.newItem = new Items('Alex',this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+    this.todo.push(this.newItem);
+    this.saveItem(this.newItem);
     this.addToDoItemForm.reset();
   }
 
@@ -126,9 +138,13 @@ export class BoardComponent implements OnInit {
 
 
   addDoingItemContent() {
+    this.indexNumber = this.doing.length;
     this.addItemDoingSelected = false;
-    this.doing.push(this.addDoingItemForm.value.itemName);
+    this.newItem = new Items('Alex',this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber)
+    this.doing.push(this.newItem);
+    this.saveItem(this.newItem);
     this.addDoingItemForm.reset();
+    console.log(this.doing)
   }
 
   cancelDoingAddItemContent() {
@@ -137,8 +153,12 @@ export class BoardComponent implements OnInit {
   }
 
   addDoneItemContent() {
+    this.indexNumber = this.done.length;
     this.addItemDoneSelected = false;
-    this.done.push(this.addDoneItemForm.value.itemName);
+    this.newItem = new Items('Alex',this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
+    this.done.push(this.newItem);
+    this.saveItem(this.newItem);
+    console.log(this.done);
     this.addDoneItemForm.reset();
   }
 
@@ -149,14 +169,35 @@ export class BoardComponent implements OnInit {
 
 
   deleteToDoItem(item: number) {
+    this.newItem = this.todo[item];
+    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
+      console.log('Delete successful ')
+      },
+      error  => {
+        console.log("Error", error);
+      });
     this.todo.splice(item, 1);
   }
 
   deleteDoingItem(item: number) {
+    this.newItem = this.doing[item];
+    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
+        console.log('Delete successful ')
+      },
+      error  => {
+        console.log("Error", error);
+      });
     this.doing.splice(item, 1);
   }
 
   deleteDoneItem(item: number) {
+    this.newItem = this.done[item];
+    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
+        console.log('Delete successful ')
+      },
+      error  => {
+        console.log("Error", error);
+      });
     this.done.splice(item, 1);
   }
 
