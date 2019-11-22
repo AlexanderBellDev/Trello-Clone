@@ -1,7 +1,11 @@
 applications:
   - name: TrelloClone
+    path: build/libs/trelloclone.jar
     memory: 1G
     disk: 512M
     instances: 1
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
     buildpacks:
       - java_buildpack
+
