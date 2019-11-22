@@ -44,7 +44,8 @@ export class ItemDetailComponent implements OnInit {
   });
 
   closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.itemDetail);
+   // window.location.reload();
   }
 
   setFormData(){

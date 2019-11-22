@@ -211,7 +211,16 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
+
+       this.newItem = result;
+       if(this.newItem.columnName === 'ToDo'){
+         this.todo[this.newItem.indexNum] = this.newItem;
+       }else if(this.newItem.columnName === 'doing'){
+         this.doing[this.newItem.columnName] = this.newItem;
+       }else if(this.newItem.columnName === 'done'){
+         this.done[this.newItem.indexNum] = this.newItem;
+       }
+      console.log(this.newItem)
     });
 
   }
