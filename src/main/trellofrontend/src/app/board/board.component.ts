@@ -24,6 +24,7 @@ export class BoardComponent implements OnInit {
   addItemDoingSelected: boolean;
   addItemToDoSelected: boolean;
   addItemDoneSelected: boolean;
+  itemHover = false;
 
   constructor(private formBuilder: FormBuilder, private itemsService: ItemService, public dialog: MatDialog) {
   }
@@ -35,9 +36,15 @@ export class BoardComponent implements OnInit {
   items: Items[] = [];
   private indexNumber: number;
   private newItem: Items;
+  username: string;
 
   ngOnInit() {
-    this.itemsService.getItems('Alex').subscribe(data => {
+   if(sessionStorage.getItem('authenticatedUser')){
+     this.username = sessionStorage.getItem('authenticatedUser');
+   }else{
+     this.username = '';
+   }
+    this.itemsService.getItems(this.username).subscribe(data => {
         this.items = data;
         console.log(this.items);
         for (let entry of this.items) {
@@ -136,7 +143,7 @@ export class BoardComponent implements OnInit {
   addToDoItemContent() {
     this.indexNumber = this.todo.length;
     this.addItemToDoSelected = false;
-    this.newItem = new Items('Alex',this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+    this.newItem = new Items(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
     this.saveItem(this.newItem);
   }
 
@@ -149,7 +156,7 @@ export class BoardComponent implements OnInit {
   addDoingItemContent() {
     this.indexNumber = this.doing.length;
     this.addItemDoingSelected = false;
-    this.newItem = new Items('Alex',this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
+    this.newItem = new Items(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
     this.saveItem(this.newItem);
 
   }
@@ -162,7 +169,7 @@ export class BoardComponent implements OnInit {
   addDoneItemContent() {
     this.indexNumber = this.done.length;
     this.addItemDoneSelected = false;
-    this.newItem = new Items('Alex',this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
+    this.newItem = new Items(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
     this.saveItem(this.newItem);
   }
 
@@ -234,5 +241,12 @@ export class BoardComponent implements OnInit {
       console.log(this.newItem)
     });
 
+  }
+
+  mouseEnter(item: Items) {
+    item.delete = true;
+  }
+  mouseLeave(item: Items) {
+    item.delete = false;
   }
 }
