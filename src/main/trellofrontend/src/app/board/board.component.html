@@ -2,7 +2,9 @@
   <div class="board-container">
     <h2 style="margin-left: 2rem">To do</h2>
     <div cdkDropList id="todo" [cdkDropListData]="todo" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" (click)="openDialog(item)" *ngFor="let item of todo ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteToDoItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+      <div class="box" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)" *ngFor="let item of todo ;index as i" cdkDrag>
+        <div style="word-break: break-all">{{item.itemName}}</div>
+        <div *ngIf="item.delete"  (click)="deleteToDoItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
     </div>
     <div *ngIf="!addItemToDoSelected" class="addItem" (click)="addItemToDo()"><h4>Add Item</h4></div>
     <div *ngIf="addItemToDoSelected" class="addItemContent">
@@ -37,7 +39,9 @@
     <h2 style="margin-left: 2rem">Doing</h2>
 
     <div cdkDropList id="doing" [cdkDropListData]="doing" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" (click)="openDialog(item)"  *ngFor="let item of doing ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoingItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+      <div class="box"  (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)"  *ngFor="let item of doing ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div>
+        <div *ngIf="item.delete" (click)="deleteDoingItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div>
+      </div>
     </div>
 
     <div *ngIf="!addItemDoingSelected" class="addItem" (click)="addItemDoing()"><h4>Add item</h4></div>
@@ -72,8 +76,11 @@
   <div class="board-container">
     <h2 style="margin-left: 2rem">Done</h2>
 
-    <div cdkDropList id="done" [cdkDropListData]="done" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" (click)="openDialog(item)"  *ngFor="let item of done ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div><div (click)="deleteDoneItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+    <div  cdkDropList id="done" [cdkDropListData]="done" class="list" (cdkDropListDropped)="drop($event)">
+      <div class="box" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)"  *ngFor="let item of done ;index as i" cdkDrag>
+        <div style="word-break: break-all">{{item.itemName}}</div>
+        <div *ngIf="item.delete" (click)="deleteDoneItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div>
+        </div>
     </div>
     <div *ngIf="!addItemDoneSelected" class="addItem" (click)="addItemDone()"><h4>Add item</h4></div>
     <div *ngIf="addItemDoneSelected" class="addItemContent">

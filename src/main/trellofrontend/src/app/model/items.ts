@@ -6,6 +6,7 @@ export class Items {
   columnName: string;
   itemDetail: string;
   indexNum: number;
+  delete:boolean;
 
 
   constructor(username: string, itemName: string, columnName: string, itemDetail: string, indexNum: number) {
