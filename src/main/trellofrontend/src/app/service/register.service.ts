@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../model/user";
+import {API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class RegisterService {
 
 
   register(user){
-    return this.http.post<User>(`https://trelloclone.cfapps.io/api/register`,user)
+    return this.http.post<User>(`${API_URL}/api/register`,user)
   }
 
 }
