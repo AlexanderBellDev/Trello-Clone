@@ -13,14 +13,5 @@ public class LoginController {
     public LoginController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping("/api/checklogin")
-    @CrossOrigin("http://localhost:4200")
-    public ResponseEntity<?> checkLogin(@RequestBody User user){
-        boolean result = userService.checkLogin(user.getUsername(), user.getPassword());
 
-        if(!result){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

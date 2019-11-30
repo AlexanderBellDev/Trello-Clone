@@ -22,7 +22,7 @@ export class RegisterService {
 
 
   register(user){
-    return this.http.post<User>(`${API_URL}/api/register`,user)
+    return this.http.post<User>(`${API_URL}/api/auth/register`,user)
   }
 
 }

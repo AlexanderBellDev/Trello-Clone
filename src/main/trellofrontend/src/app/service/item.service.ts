@@ -11,21 +11,21 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
-  getItems(username){
-      return this.http.get<Items[]>(`${API_URL}/api/getItems/${username}`)
+  getItems(){
+      return this.http.get<Items[]>(`${API_URL}/api/board/getItems`)
   }
 
   getItemDetails(itemID){
-    return this.http.get<Items>(`${API_URL}/api/getItemDetail/${itemID}`)
+    return this.http.get<Items>(`${API_URL}/api/board/getItemDetail/${itemID}`)
   }
   saveItems(item){
-    return this.http.post<Items[]>(`${API_URL}/api/updateItem`,item)
+    return this.http.post<Items[]>(`${API_URL}/api/board/updateItem`,item)
   }
   saveItem(item){
-    return this.http.post<Items>(`${API_URL}/api/updateItemSingle`,item)
+    return this.http.post<Items>(`${API_URL}/api/board/updateItemSingle`,item)
   }
   deleteItem(item){
-    return this.http.post<Items>(`${API_URL}/api/deleteItemSingle`,item)
+    return this.http.post<Items>(`${API_URL}/api/board/deleteItemSingle`,item)
   }
 
 }

@@ -3,6 +3,7 @@ package com.alexanderbelldev.trelloclone.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,11 +13,14 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    Long id;
     String username;
     String firstName;
     String surname;
     String email;
     String password;
+
+    @ManyToMany
+    private Set<Role> roles = new HashSet<>();
 
 }

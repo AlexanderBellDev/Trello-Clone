@@ -14,11 +14,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { BoardComponent } from './board/board.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {AuthInterceptorService} from "./service/auth-interceptor.service";
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     LoginComponent,
     BoardComponent,
     ItemDetailComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,9 @@ import {MatDialogModule} from "@angular/material/dialog";
   entryComponents: [
     ItemDetailComponent
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
