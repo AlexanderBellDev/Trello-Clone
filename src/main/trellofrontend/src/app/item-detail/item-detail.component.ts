@@ -13,9 +13,10 @@ export class ItemDetailComponent implements OnInit {
   detailFlag = false;
   nameFlag = false;
   itemDetail: Item;
+
   constructor(
     public dialogRef: MatDialogRef<ItemDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data:Item,
+    @Inject(MAT_DIALOG_DATA) public data: Item,
     private formBuilder: FormBuilder, private itemService: ItemService) {
     this.dialogRef.backdropClick().subscribe(_ => {
       this.itemDetail = this.itemFromDB;
@@ -23,15 +24,15 @@ export class ItemDetailComponent implements OnInit {
     })
   }
 
-    itemFromDB: Item;
+  itemFromDB: Item;
 
   ngOnInit() {
-    this.itemService.getItemDetails(this.data.id).subscribe(data  => {
+    this.itemService.getItemDetails(this.data.id).subscribe(data => {
         console.log(data.id);
         this.itemFromDB = data;
         this.setFormData();
       },
-      error  => {
+      error => {
         console.log("Error", error);
       });
 
@@ -48,10 +49,10 @@ export class ItemDetailComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close(this.itemDetail);
-   // window.location.reload();
+    // window.location.reload();
   }
 
-  setFormData(){
+  setFormData() {
     this.itemDetailForm.patchValue({
       id: this.itemFromDB.id,
       username: this.itemFromDB.username,
@@ -64,14 +65,14 @@ export class ItemDetailComponent implements OnInit {
 
   onSubmit() {
     this.itemDetail = this.itemDetailForm.value;
-   this.saveItem(this.itemDetail);
+    this.saveItem(this.itemDetail);
   }
 
-  saveItem(item){
-    this.itemService.saveItem(item).subscribe(()  => {
-      this.closeDialog()
+  saveItem(item) {
+    this.itemService.saveItem(item).subscribe(() => {
+        this.closeDialog()
       },
-      error  => {
+      error => {
         console.log("Error", error);
       })
   }
