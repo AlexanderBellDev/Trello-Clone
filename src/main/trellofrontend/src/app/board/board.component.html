@@ -4,9 +4,9 @@
     <div cdkDropList id="todo" [cdkDropListData]="todo" class="list" (cdkDropListDropped)="drop($event)">
       <div class="box" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)" *ngFor="let item of todo ;index as i" cdkDrag>
         <div style="word-break: break-all">{{item.itemName}}</div>
-        <div *ngIf="item.delete"  (click)="deleteToDoItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+        <div *ngIf="item.delete"  (click)="deleteItem(item.columnName,i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
     </div>
-    <div *ngIf="!addItemToDoSelected" class="addItem" (click)="addItemToDo()"><h4>Add Item</h4></div>
+    <div *ngIf="!addItemToDoSelected" class="addItem" (click)="addItem('ToDo')"><h4>Add Item</h4></div>
     <div *ngIf="addItemToDoSelected" class="addItemContent">
       <h4>&nbsp;Add item</h4>
       <form [formGroup]="addToDoItemForm" autocomplete="off">
@@ -22,12 +22,12 @@
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="primary" type="submit"
-                  [disabled]="!addToDoItemForm.valid" (click)="addToDoItemContent()">Submit
+                  [disabled]="!addToDoItemForm.valid" (click)="addItemContent('ToDo')">Submit
           </button>
         </div>
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="warn" type="reset"
-                  (click)="cancelToDoAddItemContent()">Cancel
+                  (click)="cancelAddItemContent('ToDo')">Cancel
           </button>
         </div>
       </div>
@@ -40,11 +40,11 @@
 
     <div cdkDropList id="doing" [cdkDropListData]="doing" class="list" (cdkDropListDropped)="drop($event)">
       <div class="box"  (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)"  *ngFor="let item of doing ;index as i" cdkDrag><div style="word-break: break-all">{{item.itemName}}</div>
-        <div *ngIf="item.delete" (click)="deleteDoingItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div>
+        <div *ngIf="item.delete" (click)="deleteItem(item.columnName,i)" style="color: lightskyblue; cursor: pointer">Delete</div>
       </div>
     </div>
 
-    <div *ngIf="!addItemDoingSelected" class="addItem" (click)="addItemDoing()"><h4>Add item</h4></div>
+    <div *ngIf="!addItemDoingSelected" class="addItem" (click)="addItem('Doing')"><h4>Add item</h4></div>
     <div *ngIf="addItemDoingSelected" class="addItemContent">
       <h4>&nbsp;Add item</h4>
       <form [formGroup]="addDoingItemForm" autocomplete="off">
@@ -60,12 +60,12 @@
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="primary" type="submit"
-                  [disabled]="!addDoingItemForm.valid" (click)="addDoingItemContent()">Submit
+                  [disabled]="!addDoingItemForm.valid" (click)="addItemContent('Doing')">Submit
           </button>
         </div>
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="warn" type="reset"
-                  (click)="cancelDoingAddItemContent()">Cancel
+                  (click)="cancelAddItemContent('Doing')">Cancel
           </button>
         </div>
       </div>
@@ -79,10 +79,10 @@
     <div  cdkDropList id="done" [cdkDropListData]="done" class="list" (cdkDropListDropped)="drop($event)">
       <div class="box" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)"  *ngFor="let item of done ;index as i" cdkDrag>
         <div style="word-break: break-all">{{item.itemName}}</div>
-        <div *ngIf="item.delete" (click)="deleteDoneItem(i)" style="color: lightskyblue; cursor: pointer">Delete</div>
+        <div *ngIf="item.delete" (click)="deleteItem(item.columnName,i)" style="color: lightskyblue; cursor: pointer">Delete</div>
         </div>
     </div>
-    <div *ngIf="!addItemDoneSelected" class="addItem" (click)="addItemDone()"><h4>Add item</h4></div>
+    <div *ngIf="!addItemDoneSelected" class="addItem" (click)="addItem('Done')"><h4>Add item</h4></div>
     <div *ngIf="addItemDoneSelected" class="addItemContent">
       <h4>&nbsp;Add item</h4>
       <form [formGroup]="addDoneItemForm" autocomplete="off">
@@ -98,12 +98,12 @@
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="primary" type="submit"
-                  [disabled]="!addDoneItemForm.valid" (click)="addDoneItemContent()">Submit
+                  [disabled]="!addDoneItemForm.valid" (click)="addItemContent('Done')">Submit
           </button>
         </div>
         <div class="btn-group" role="group">
           <button mat-raised-button style="text-align: center;" color="warn" type="reset"
-                  (click)="cancelDoneAddItemContent()">Cancel
+                  (click)="cancelAddItemContent('Done')">Cancel
           </button>
         </div>
       </div>

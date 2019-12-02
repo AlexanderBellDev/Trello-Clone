@@ -28,4 +28,13 @@ export class ItemService {
     return this.http.post<Item>(`${API_URL}/api/board/deleteItemSingle`,item)
   }
 
+  deleteItemAction(itemToDelete){
+    this.deleteItem(itemToDelete).subscribe(()  => {
+        console.log('Delete successful ')
+      },
+      error  => {
+        console.log("Error", error);
+      });
+  }
+
 }

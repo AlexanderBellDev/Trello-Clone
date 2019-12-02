@@ -47,17 +47,19 @@ export class BoardComponent implements OnInit {
     this.itemsService.getItems().subscribe(data => {
         this.items = data;
         console.log(this.items);
-        for (let entry of this.items) {
-          if (entry.columnName === 'ToDo') {
+      for (let entry of this.items) {
+        switch (entry.columnName) {
+          case 'ToDo':
             this.todo.push(entry);
-          }
-          if (entry.columnName === 'Doing') {
+            break;
+          case 'Doing':
             this.doing.push(entry);
-          }
-          if (entry.columnName === 'Done') {
-            this.done.push(entry)
-          }
+            break;
+          case 'Done':
+            this.done.push(entry);
+            break;
         }
+      }
       },
       error => {
         console.log("Error", error);
@@ -75,43 +77,42 @@ export class BoardComponent implements OnInit {
     this.saveColumn();
   }
 
-  addItemDoing() {
-    this.addItemDoingSelected = true;
-  }
 
-  addItemToDo() {
-    this.addItemToDoSelected = true;
-  }
-
-  addItemDone() {
-    this.addItemDoneSelected = true;
+  addItem(columnName){
+    switch (columnName) {
+      case 'ToDo':
+        this.addItemToDoSelected = true;
+        break;
+      case 'Doing':
+        this.addItemDoingSelected = true;
+        break;
+      case 'Done':
+        this.addItemDoneSelected = true;
+        break;
+    }
   }
 
   saveColumn() {
-
       this.todo.forEach((item, index) => {
         item.columnName = 'ToDo';
         item.indexNum = index;
         this.itemsArray.push(item);
-        //this.saveItem(item);
       });
       this.doing.forEach((item, index) => {
         item.columnName = 'Doing';
         item.indexNum = index;
         this.itemsArray.push(item);
-      //  this.saveItem(item);
       });
         this.done.forEach((item, index) => {
           item.columnName = 'Done';
           item.indexNum = index;
           this.itemsArray.push(item);
-       //   this.saveItem(item);
         });
         this.saveItems(this.itemsArray);
   }
 
   saveItems(item){
-    this.itemsService.saveItems(item).subscribe(data  => {
+    this.itemsService.saveItems(item).subscribe(()  => {
       },
       error  => {
         console.log("Error", error);
@@ -120,107 +121,96 @@ export class BoardComponent implements OnInit {
   saveItem(item){
     this.itemsService.saveItem(item).subscribe(data  => {
       this.newItem = data;
-      if(this.newItem.columnName === 'ToDo'){
-        this.todo.push(this.newItem);
-        this.addToDoItemForm.reset();
-      }else if(this.newItem.columnName === 'Doing'){
-        this.doing.push(this.newItem);
-        this.addDoingItemForm.reset();
-      }else if(this.newItem.columnName === 'Done'){
-        this.done.push(this.newItem);
-        this.addDoneItemForm.reset();
-      }
+        switch (this.newItem.columnName) {
+          case 'ToDo':
+            this.todo.push(this.newItem);
+            this.addToDoItemForm.reset();
+            break;
+          case 'Doing':
+            this.doing.push(this.newItem);
+            this.addDoingItemForm.reset();
+            break;
+          case 'Done':
+            this.done.push(this.newItem);
+            this.addDoneItemForm.reset();
+            break;
+        }
       },
       error  => {
         console.log("Error", error);
       })
   }
 
-  // get f() {
-  //   return this.addItemForm.controls;
-  // }
-
-  addToDoItemContent() {
-    this.indexNumber = this.todo.length;
-    this.addItemToDoSelected = false;
-    this.newItem = new Item(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+  addItemContent(columnName){
+    switch (columnName) {
+      case 'ToDo':
+        this.indexNumber = this.todo.length;
+        this.addItemToDoSelected = false;
+        this.newItem = new Item(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+        break;
+      case 'Doing':
+        this.indexNumber = this.doing.length;
+        this.addItemDoingSelected = false;
+        this.newItem = new Item(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
+        break;
+      case 'Done':
+        this.indexNumber = this.done.length;
+        this.addItemDoneSelected = false;
+        this.newItem = new Item(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
+        break;
+    }
     this.saveItem(this.newItem);
   }
 
-  cancelToDoAddItemContent() {
-    this.addToDoItemForm.reset();
-    this.addItemToDoSelected = false;
+  cancelAddItemContent(columnName){
+    switch (columnName) {
+      case 'ToDo':
+        this.addToDoItemForm.reset();
+        this.addItemToDoSelected = false;
+        break;
+      case 'Doing':
+        this.addDoingItemForm.reset();
+        this.addItemDoingSelected = false;
+        break;
+      case 'Done':
+        this.addDoneItemForm.reset();
+        this.addItemDoneSelected = false;
+        break;
+    }
   }
 
 
-  addDoingItemContent() {
-    this.indexNumber = this.doing.length;
-    this.addItemDoingSelected = false;
-    this.newItem = new Item(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
-    this.saveItem(this.newItem);
-
+  deleteItem(column:string, itemNumber:number){
+    switch (column) {
+      case 'ToDo':
+        this.newItem = this.todo[itemNumber];
+        this.itemsService.deleteItemAction(this.newItem);
+        this.todo.splice(itemNumber, 1);
+        break;
+      case 'Doing':
+        this.newItem = this.doing[itemNumber];
+        this.itemsService.deleteItemAction(this.newItem);
+        this.doing.splice(itemNumber, 1);
+        break;
+      case 'Done':
+        this.newItem = this.done[itemNumber];
+        this.itemsService.deleteItemAction(this.newItem);
+        this.done.splice(itemNumber, 1);
+        break;
+    }
   }
-
-  cancelDoingAddItemContent() {
-    this.addDoingItemForm.reset();
-    this.addItemDoingSelected = false;
-  }
-
-  addDoneItemContent() {
-    this.indexNumber = this.done.length;
-    this.addItemDoneSelected = false;
-    this.newItem = new Item(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
-    this.saveItem(this.newItem);
-  }
-
-  cancelDoneAddItemContent() {
-    this.addDoneItemForm.reset();
-    this.addItemDoneSelected = false;
-  }
-
-
-  deleteToDoItem(item: number) {
-    this.newItem = this.todo[item];
-    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
-      console.log('Delete successful ')
-      },
-      error  => {
-        console.log("Error", error);
-      });
-    this.todo.splice(item, 1);
-  }
-
-  deleteDoingItem(item: number) {
-    this.newItem = this.doing[item];
-    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
-        console.log('Delete successful ')
-      },
-      error  => {
-        console.log("Error", error);
-      });
-    this.doing.splice(item, 1);
-  }
-
-  deleteDoneItem(item: number) {
-    this.newItem = this.done[item];
-    this.itemsService.deleteItem(this.newItem).subscribe(data  => {
-        console.log('Delete successful ')
-      },
-      error  => {
-        console.log("Error", error);
-      });
-    this.done.splice(item, 1);
-  }
-
 
   openDialog(item:Item) {
-    if(item.columnName === 'ToDo'){
-      item = this.todo[item.indexNum];
-      console.log('item is now' + item.id);
-    }else if(item.columnName === 'Doing'){
-      item = this.doing[item.indexNum];
-    }else if(item.columnName === 'Done'){
-      item =  this.done[item.indexNum];
+    switch (item.columnName) {
+      case 'ToDo':
+        item = this.todo[item.indexNum];
+        break;
+      case 'Doing':
+        item = this.doing[item.indexNum];
+        break;
+      case 'Done':
+        item =  this.done[item.indexNum];
+        break;
     }
     const dialogRef = this.dialog.open(ItemDetailComponent, {
       width: '800px',
@@ -231,18 +221,23 @@ export class BoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
        this.newItem = result;
-       if(this.newItem.columnName === 'ToDo'){
-         this.todo[this.newItem.indexNum] = this.newItem;
-       }else if(this.newItem.columnName === 'Doing'){
-         this.doing[this.newItem.indexNum] = this.newItem;
-       }else if(this.newItem.columnName === 'Done'){
-         this.done[this.newItem.indexNum] = this.newItem;
-       }
+      switch (this.newItem.columnName) {
+        case 'ToDo':
+          this.todo[this.newItem.indexNum] = this.newItem;
+          break;
+        case 'Doing':
+          this.doing[this.newItem.indexNum] = this.newItem;
+          break;
+        case 'Done':
+          this.done[this.newItem.indexNum] = this.newItem;
+          break;
+      }
       console.log(this.newItem)
     });
 
   }
 
+  //Show and hide delete function
   mouseEnter(item: Item) {
     item.delete = true;
   }
