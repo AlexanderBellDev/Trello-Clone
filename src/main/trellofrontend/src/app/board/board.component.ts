@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {FormBuilder, Validators} from "@angular/forms";
 import {ItemService} from "../service/item.service";
-import {Items} from "../model/items";
+import {Item} from "../model/item";
 import {ItemDetailComponent} from "../item-detail/item-detail.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -29,13 +29,13 @@ export class BoardComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private itemsService: ItemService, public dialog: MatDialog) {
   }
 
-  todo: Items[] = [];
-  doing: Items[] = [];
-  done: Items[] = [];
-  itemsArray: Items[] = [];
-  items: Items[] = [];
+  todo: Item[] = [];
+  doing: Item[] = [];
+  done: Item[] = [];
+  itemsArray: Item[] = [];
+  items: Item[] = [];
   private indexNumber: number;
-  private newItem: Items;
+  private newItem: Item;
   username: string;
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit {
    }else{
      this.username = '';
    }
-    this.itemsService.getItems(this.username).subscribe(data => {
+    this.itemsService.getItems().subscribe(data => {
         this.items = data;
         console.log(this.items);
         for (let entry of this.items) {
@@ -66,7 +66,7 @@ export class BoardComponent implements OnInit {
 
   }
 
-  drop(event: CdkDragDrop<Items[]>) {
+  drop(event: CdkDragDrop<Item[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -143,7 +143,7 @@ export class BoardComponent implements OnInit {
   addToDoItemContent() {
     this.indexNumber = this.todo.length;
     this.addItemToDoSelected = false;
-    this.newItem = new Items(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+    this.newItem = new Item(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
     this.saveItem(this.newItem);
   }
 
@@ -156,7 +156,7 @@ export class BoardComponent implements OnInit {
   addDoingItemContent() {
     this.indexNumber = this.doing.length;
     this.addItemDoingSelected = false;
-    this.newItem = new Items(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
+    this.newItem = new Item(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
     this.saveItem(this.newItem);
 
   }
@@ -169,7 +169,7 @@ export class BoardComponent implements OnInit {
   addDoneItemContent() {
     this.indexNumber = this.done.length;
     this.addItemDoneSelected = false;
-    this.newItem = new Items(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
+    this.newItem = new Item(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
     this.saveItem(this.newItem);
   }
 
@@ -213,7 +213,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  openDialog(item:Items) {
+  openDialog(item:Item) {
     if(item.columnName === 'ToDo'){
       item = this.todo[item.indexNum];
       console.log('item is now' + item.id);
@@ -243,10 +243,10 @@ export class BoardComponent implements OnInit {
 
   }
 
-  mouseEnter(item: Items) {
+  mouseEnter(item: Item) {
     item.delete = true;
   }
-  mouseLeave(item: Items) {
+  mouseLeave(item: Item) {
     item.delete = false;
   }
 }

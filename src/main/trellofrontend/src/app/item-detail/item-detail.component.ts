@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Items} from "../model/items";
+import {Item} from "../model/item";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ItemService} from "../service/item.service";
 
@@ -12,10 +12,10 @@ import {ItemService} from "../service/item.service";
 export class ItemDetailComponent implements OnInit {
   detailFlag = false;
   nameFlag = false;
-  itemDetail: Items;
+  itemDetail: Item;
   constructor(
     public dialogRef: MatDialogRef<ItemDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data:Items,
+    @Inject(MAT_DIALOG_DATA) public data:Item,
     private formBuilder: FormBuilder, private itemService: ItemService) {
     this.dialogRef.backdropClick().subscribe(_ => {
       this.itemDetail = this.itemFromDB;
@@ -23,7 +23,7 @@ export class ItemDetailComponent implements OnInit {
     })
   }
 
-    itemFromDB: Items;
+    itemFromDB: Item;
 
   ngOnInit() {
     this.itemService.getItemDetails(this.data.id).subscribe(data  => {
@@ -68,7 +68,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   saveItem(item){
-    this.itemService.saveItem(item).subscribe(data  => {
+    this.itemService.saveItem(item).subscribe(()  => {
       this.closeDialog()
       },
       error  => {

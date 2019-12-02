@@ -1,18 +1,16 @@
 package com.alexanderbelldev.trelloclone.Service;
 
-import com.alexanderbelldev.trelloclone.Model.Items;
-import org.springframework.http.ResponseEntity;
+import com.alexanderbelldev.trelloclone.Model.Item;
 
-import java.security.cert.Extension;
 import java.util.List;
 
 public interface ItemService {
 
-    public List<Items> getItems(String username);
+    List<Item> getItems(String username);
 
-    Items saveItem(Items item);
+    Item saveItem(Item item);
 
-    boolean deleteItem(Items item);
+    boolean deleteItem(Item item);
 
-    Items getItemByID(Integer itemID);
+    Item getItemByID(Integer itemID);
 }

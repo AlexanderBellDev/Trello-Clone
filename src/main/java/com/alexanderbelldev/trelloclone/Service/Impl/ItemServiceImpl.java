@@ -1,9 +1,8 @@
 package com.alexanderbelldev.trelloclone.Service.Impl;
 
-import com.alexanderbelldev.trelloclone.Model.Items;
+import com.alexanderbelldev.trelloclone.Model.Item;
 import com.alexanderbelldev.trelloclone.Repository.ItemRepository;
 import com.alexanderbelldev.trelloclone.Service.ItemService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,21 +15,21 @@ public class ItemServiceImpl implements ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Items> getItems(String username) {
+    public List<Item> getItems(String username) {
       return itemRepository.findAllByUsernameOrderByIndexNumAsc(username);
     }
 
-    public Items saveItem(Items item) {
+    public Item saveItem(Item item) {
         return itemRepository.save(item);
     }
 
 
-    public boolean deleteItem(Items item) {
+    public boolean deleteItem(Item item) {
          itemRepository.delete(item);
         return itemRepository.findById(item.getId()).isEmpty();
     }
 
-    public Items getItemByID(Integer itemID) {
-        return itemRepository.findById(itemID).get();
+    public Item getItemByID(Integer itemID) {
+        return itemRepository.findById(itemID).orElse(null);
     }
 }
