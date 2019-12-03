@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/board")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200","https://trelloclone.cfapps.io"}, maxAge = 3600, allowCredentials = "true")
 public class ItemController {
 
     private ItemService itemService;

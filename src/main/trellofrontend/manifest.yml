@@ -1,0 +1,8 @@
+---
+applications:
+  - name: TrelloClone
+    memory: 1G
+    disk: 512M
+    instances: 1
+    buildpack: staticfile_buildpack
+path: dist/trellofrontend

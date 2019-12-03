@@ -26,6 +26,7 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = {"http://localhost:4200","https://trelloclone.cfapps.io"}, maxAge = 3600, allowCredentials = "true")
 public class AuthController {
     private UserService userService;
     private UserRepository userRepository;
@@ -57,19 +58,15 @@ public class AuthController {
 
 
     @GetMapping("/api/checkemail/{email}")
-    @CrossOrigin("http://localhost:4200")
     public ResponseEntity<?> checkEmailExists(@PathVariable String email){
       return new ResponseEntity<>(userService.checkEmailExists(email), HttpStatus.OK);
     }
 
     @GetMapping("/api/checkusername/{username}")
-    @CrossOrigin("http://localhost:4200")
     public ResponseEntity<?> checkUsernameExists(@PathVariable String username){
         return new ResponseEntity<>(userService.checkUsernameExists(username), HttpStatus.OK);
     }
 
-
-    @CrossOrigin("http://localhost:4200")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
         if(userRepository.existsByUsername(user.getUsername())) {

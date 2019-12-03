@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../model/user";
-import {API_URL} from "../app.constants";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class RegisterService {
 
 
   register(user){
-    return this.http.post<User>(`${API_URL}/api/auth/register`,user)
+    return this.http.post<User>(`${environment.API_URL}/api/auth/register`,user)
   }
 
 }

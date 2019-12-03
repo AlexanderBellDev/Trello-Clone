@@ -1,5 +1,5 @@
 applications:
-  - name: TrelloClone
+  - name: TrelloCloneBackend
     path: build/libs/trelloclone.jar
     memory: 1G
     disk: 512M
