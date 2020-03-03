@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "app.jwtExpirationInMs",
+      "type": "java.lang.String",
+      "description": "duration of jwt key in ms."
+    },
+    {
+      "name": "app.jwtSecret",
+      "type": "java.lang.String",
+      "description": "encryption key."
+    }
+  ]
+}

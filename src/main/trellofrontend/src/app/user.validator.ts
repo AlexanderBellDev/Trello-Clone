@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
-import { Observable, timer } from 'rxjs';
-import { map, switchMap  } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
+import {Observable, timer} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {environment} from "../environments/environment";
 
-const URL = 'https://trelloclone.cfapps.io';
+//const URL = 'https://trelloclone.cfapps.io';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserValidators {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
 
   searchUsername(text) {
@@ -20,7 +22,7 @@ export class UserValidators {
       .pipe(
         switchMap(() => {
           // Check if username is available
-          return this.http.get<any>(`${URL}/api/checkusername/${text}`)
+          return this.http.get<any>(`${environment.API_URL}/api/auth/checkusername/${text}`)
         })
       );
   }
@@ -47,7 +49,7 @@ export class UserValidators {
       .pipe(
         switchMap(() => {
           // Check if username is available
-          return this.http.get<any>(`${URL}/api/checkemail/${text}`)
+          return this.http.get<any>(`${environment.API_URL}/api/auth/checkemail/${text}`)
         })
       );
   }

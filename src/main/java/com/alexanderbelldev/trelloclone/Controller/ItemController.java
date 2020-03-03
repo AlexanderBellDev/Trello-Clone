@@ -44,26 +44,36 @@ public class ItemController {
 
     @PostMapping("/updateItem")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> updateItem(@RequestBody List<Item> Item){
-        for (com.alexanderbelldev.trelloclone.Model.Item item: Item) {
-            if(itemService.saveItem(item).getId() == null){
+    public ResponseEntity<?> updateItem(@RequestBody List<Item> items) {
+
+        //builder pattern 
+        //        Item build = Item.builder()
+//                .columnName("test")
+//                .itemDetail("gtt")
+//                .username("test")
+//                .build();
+
+        for (Item item : items) {
+            if (itemService.saveItem(item).getId() == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>(Item, HttpStatus.OK);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
+
     @PostMapping("/updateItemSingle")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> updateItemSingle(@RequestBody Item item){
+    public ResponseEntity<?> updateItemSingle(@RequestBody Item item) {
         System.out.println(item.toString());
-            if(itemService.saveItem(item).getId() == null){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+        if (itemService.saveItem(item).getId() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
+
     @PostMapping("/deleteItemSingle")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> deleteItemSingle(@RequestBody Item item){
+    public ResponseEntity<?> deleteItemSingle(@RequestBody Item item) {
         System.out.println(item.toString());
        if( itemService.deleteItem(item)){
            return new ResponseEntity<>(HttpStatus.OK);

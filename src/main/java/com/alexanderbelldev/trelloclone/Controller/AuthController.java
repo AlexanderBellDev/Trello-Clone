@@ -57,12 +57,12 @@ public class AuthController {
 //    }
 
 
-    @GetMapping("/api/checkemail/{email}")
+    @GetMapping("/checkemail/{email}")
     public ResponseEntity<?> checkEmailExists(@PathVariable String email){
       return new ResponseEntity<>(userService.checkEmailExists(email), HttpStatus.OK);
     }
 
-    @GetMapping("/api/checkusername/{username}")
+    @GetMapping("/checkusername/{username}")
     public ResponseEntity<?> checkUsernameExists(@PathVariable String username){
         return new ResponseEntity<>(userService.checkUsernameExists(username), HttpStatus.OK);
     }
