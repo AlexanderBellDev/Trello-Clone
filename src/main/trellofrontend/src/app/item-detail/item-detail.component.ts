@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Item} from "../model/item";
 import {FormBuilder, Validators} from "@angular/forms";
-import {ItemService} from "../service/item.service";
+import {BoardService} from "../service/board.service";
 
 @Component({
   selector: 'app-item-detail',
@@ -17,7 +17,7 @@ export class ItemDetailComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ItemDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Item,
-    private formBuilder: FormBuilder, private itemService: ItemService) {
+    private formBuilder: FormBuilder, private itemService: BoardService) {
     this.dialogRef.backdropClick().subscribe(_ => {
       this.itemDetail = this.itemFromDB;
       this.dialogRef.close(this.itemDetail);

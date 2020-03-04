@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {FormBuilder, Validators} from "@angular/forms";
-import {ItemService} from "../service/item.service";
+import {BoardService} from "../service/board.service";
 import {Item} from "../model/item";
 import {ItemDetailComponent} from "../item-detail/item-detail.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Board} from "../model/board";
 
 @Component({
   selector: 'app-board',
@@ -12,7 +13,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-  boxColor: string;
+
   addToDoItemForm = this.formBuilder.group({
     itemName: ['', [Validators.required]]
   });
@@ -27,9 +28,8 @@ export class BoardComponent implements OnInit {
   addItemDoneSelected: boolean;
   itemHover = false;
 
-  constructor(private formBuilder: FormBuilder, private itemsService: ItemService, public dialog: MatDialog) {
-  }
-
+  itemColor: string;
+  boardProperties: Board;
   todo: Item[] = [];
   doing: Item[] = [];
   done: Item[] = [];
@@ -37,37 +37,48 @@ export class BoardComponent implements OnInit {
   items: Item[] = [];
   private indexNumber: number;
   private newItem: Item;
+
+  constructor(private formBuilder: FormBuilder, private boardService: BoardService, public dialog: MatDialog) {
+  }
+
   username: string;
 
   ngOnInit() {
-    this.boxColor = 'Yellow';
-   if(sessionStorage.getItem('authenticatedUser')){
-     this.username = sessionStorage.getItem('authenticatedUser');
-   }else{
-     this.username = '';
-   }
-    this.itemsService.getItems().subscribe(data => {
+
+    if (sessionStorage.getItem('authenticatedUser')) {
+      this.username = sessionStorage.getItem('authenticatedUser');
+    } else {
+      this.username = '';
+    }
+
+    this.boardService.getBoardProperties().subscribe(data => {
+      this.boardProperties = data;
+      this.itemColor = this.boardProperties.boardColor;
+    }, () => {
+      console.log('error')
+    });
+
+
+    this.boardService.getItems().subscribe(data => {
         this.items = data;
         console.log(this.items);
-      for (let entry of this.items) {
-        switch (entry.columnName) {
-          case 'ToDo':
-            this.todo.push(entry);
-            break;
-          case 'Doing':
-            this.doing.push(entry);
-            break;
-          case 'Done':
-            this.done.push(entry);
-            break;
+        for (let entry of this.items) {
+          switch (entry.columnName) {
+            case 'ToDo':
+              this.todo.push(entry);
+              break;
+            case 'Doing':
+              this.doing.push(entry);
+              break;
+            case 'Done':
+              this.done.push(entry);
+              break;
+          }
         }
-      }
       },
       error => {
         console.log("Error", error);
       });
-
-
   }
 
   drop(event: CdkDragDrop<Item[]>) {
@@ -95,34 +106,35 @@ export class BoardComponent implements OnInit {
   }
 
   saveColumn() {
-      this.todo.forEach((item, index) => {
-        item.columnName = 'ToDo';
-        item.indexNum = index;
-        this.itemsArray.push(item);
-      });
-      this.doing.forEach((item, index) => {
-        item.columnName = 'Doing';
-        item.indexNum = index;
-        this.itemsArray.push(item);
-      });
-        this.done.forEach((item, index) => {
-          item.columnName = 'Done';
-          item.indexNum = index;
-          this.itemsArray.push(item);
-        });
-        this.saveItems(this.itemsArray);
+    this.todo.forEach((item, index) => {
+      item.columnName = 'ToDo';
+      item.indexNum = index;
+      this.itemsArray.push(item);
+    });
+    this.doing.forEach((item, index) => {
+      item.columnName = 'Doing';
+      item.indexNum = index;
+      this.itemsArray.push(item);
+    });
+    this.done.forEach((item, index) => {
+      item.columnName = 'Done';
+      item.indexNum = index;
+      this.itemsArray.push(item);
+    });
+    this.saveItems(this.itemsArray);
   }
 
-  saveItems(item){
-    this.itemsService.saveItems(item).subscribe(()  => {
+  saveItems(item) {
+    this.boardService.saveItems(item).subscribe(() => {
       },
-      error  => {
+      error => {
         console.log("Error", error);
       })
   }
-  saveItem(item){
-    this.itemsService.saveItem(item).subscribe(data  => {
-      this.newItem = data;
+
+  saveItem(item) {
+    this.boardService.saveItem(item).subscribe(data => {
+        this.newItem = data;
         switch (this.newItem.columnName) {
           case 'ToDo':
             this.todo.push(this.newItem);
@@ -148,17 +160,17 @@ export class BoardComponent implements OnInit {
       case 'ToDo':
         this.indexNumber = this.todo.length;
         this.addItemToDoSelected = false;
-        this.newItem = new Item(this.username,this.addToDoItemForm.value.itemName,'ToDo','',this.indexNumber);
+        this.newItem = new Item(this.boardProperties.username, this.addToDoItemForm.value.itemName, 'ToDo', '', this.indexNumber);
         break;
       case 'Doing':
         this.indexNumber = this.doing.length;
         this.addItemDoingSelected = false;
-        this.newItem = new Item(this.username,this.addDoingItemForm.value.itemName,'Doing','',this.indexNumber);
+        this.newItem = new Item(this.boardProperties.username, this.addDoingItemForm.value.itemName, 'Doing', '', this.indexNumber);
         break;
       case 'Done':
         this.indexNumber = this.done.length;
         this.addItemDoneSelected = false;
-        this.newItem = new Item(this.username,this.addDoneItemForm.value.itemName,'Done','',this.indexNumber);
+        this.newItem = new Item(this.boardProperties.username, this.addDoneItemForm.value.itemName, 'Done', '', this.indexNumber);
         break;
     }
     this.saveItem(this.newItem);
@@ -186,17 +198,17 @@ export class BoardComponent implements OnInit {
     switch (column) {
       case 'ToDo':
         this.newItem = this.todo[itemNumber];
-        this.itemsService.deleteItemAction(this.newItem);
+        this.boardService.deleteItemAction(this.newItem);
         this.todo.splice(itemNumber, 1);
         break;
       case 'Doing':
         this.newItem = this.doing[itemNumber];
-        this.itemsService.deleteItemAction(this.newItem);
+        this.boardService.deleteItemAction(this.newItem);
         this.doing.splice(itemNumber, 1);
         break;
       case 'Done':
         this.newItem = this.done[itemNumber];
-        this.itemsService.deleteItemAction(this.newItem);
+        this.boardService.deleteItemAction(this.newItem);
         this.done.splice(itemNumber, 1);
         break;
     }

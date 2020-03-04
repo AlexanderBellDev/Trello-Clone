@@ -1,10 +1,13 @@
 package com.alexanderbelldev.trelloclone.Service;
 
+import com.alexanderbelldev.trelloclone.Model.Board;
 import com.alexanderbelldev.trelloclone.Model.Item;
 
 import java.util.List;
 
-public interface ItemService {
+public interface BoardService {
+
+    Board getBoardProperties(String username);
 
     List<Item> getItems(String username);
 
@@ -15,4 +18,6 @@ public interface ItemService {
     Item getItemByID(Integer itemID);
 
     List<Item> saveListOfItems(List<Item> items);
+
+    Board saveProperties(Board boardProperties);
 }

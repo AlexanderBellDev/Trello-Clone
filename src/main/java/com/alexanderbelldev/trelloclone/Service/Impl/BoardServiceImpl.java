@@ -1,22 +1,28 @@
 package com.alexanderbelldev.trelloclone.Service.Impl;
 
+import com.alexanderbelldev.trelloclone.Model.Board;
 import com.alexanderbelldev.trelloclone.Model.Item;
+import com.alexanderbelldev.trelloclone.Repository.BoardRepository;
 import com.alexanderbelldev.trelloclone.Repository.ItemRepository;
-import com.alexanderbelldev.trelloclone.Service.ItemService;
+import com.alexanderbelldev.trelloclone.Service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ItemServiceImpl implements ItemService {
-    private ItemRepository itemRepository;
+@RequiredArgsConstructor
+public class BoardServiceImpl implements BoardService {
+    private final ItemRepository itemRepository;
+    private final BoardRepository boardRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository) {
-        this.itemRepository = itemRepository;
+    @Override
+    public Board getBoardProperties(String username) {
+        return boardRepository.findByUsername(username);
     }
 
     public List<Item> getItems(String username) {
-      return itemRepository.findAllByUsernameOrderByIndexNumAsc(username);
+        return itemRepository.findAllByUsernameOrderByIndexNumAsc(username);
     }
 
     public Item saveItem(Item item) {
@@ -36,5 +42,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> saveListOfItems(List<Item> items) {
         return itemRepository.saveAll(items);
+    }
+
+    @Override
+    public Board saveProperties(Board boardProperties) {
+        return boardRepository.save(boardProperties);
     }
 }

@@ -23,6 +23,7 @@ export class NavComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
+      window.location.reload();
       console.log('The dialog was closed');
     });
   }
