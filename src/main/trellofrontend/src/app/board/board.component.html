@@ -2,9 +2,13 @@
   <div class="board-container">
     <h2 style="margin-left: 2rem">To do</h2>
     <div cdkDropList id="todo" [cdkDropListData]="todo" class="list" (cdkDropListDropped)="drop($event)">
-      <div class="box" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)" (click)="openDialog(item)" *ngFor="let item of todo ;index as i" cdkDrag>
+      <div (click)="openDialog(item)" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseLeave(item)"
+           *ngFor="let item of todo ;index as i" [ngStyle]="{'background':boxColor}" cdkDrag class="box">
         <div style="word-break: break-all">{{item.itemName}}</div>
-        <div *ngIf="item.delete"  (click)="deleteItem(item.columnName,i)" style="color: lightskyblue; cursor: pointer">Delete</div></div>
+        <div (click)="deleteItem(item.columnName,i)" *ngIf="item.delete" style="color: lightskyblue; cursor: pointer">
+          Delete
+        </div>
+      </div>
     </div>
     <div *ngIf="!addItemToDoSelected" class="addItem" (click)="addItem('ToDo')"><h4>Add Item</h4></div>
     <div *ngIf="addItemToDoSelected" class="addItemContent">
@@ -13,7 +17,9 @@
         <div class="form-group">
           <mat-form-field style="margin-right: 27rem; width: 100%" appearance="fill" color="accent">
             <mat-label>Item Name</mat-label>
-            <input formControlName="itemName" required matInput>
+            <label>
+              <input formControlName="itemName" matInput required>
+            </label>
             <mat-error *ngIf="addToDoItemForm.get('itemName').invalid">Field is required</mat-error>
           </mat-form-field>
           <br>
@@ -51,7 +57,9 @@
         <div class="form-group">
           <mat-form-field style="margin-right: 27rem; width: 100%" appearance="fill" color="accent">
             <mat-label>Item Name</mat-label>
-            <input formControlName="itemName" required matInput>
+            <label>
+              <input formControlName="itemName" matInput required>
+            </label>
             <mat-error *ngIf="addDoingItemForm.get('itemName').invalid">Field is required</mat-error>
           </mat-form-field>
           <br>
@@ -89,7 +97,9 @@
         <div class="form-group">
           <mat-form-field style="margin-right: 27rem; width: 100%" appearance="fill" color="accent">
             <mat-label>Item Name</mat-label>
-            <input formControlName="itemName" required matInput>
+            <label>
+              <input formControlName="itemName" matInput required>
+            </label>
             <mat-error *ngIf="addDoneItemForm.get('itemName').invalid">Field is required</mat-error>
           </mat-form-field>
           <br>

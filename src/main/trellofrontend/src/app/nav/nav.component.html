@@ -20,6 +20,9 @@
           </li>
 
           <li *ngIf="loginService.isUserLoggedIn()" [routerLinkActive]="['active']">
+            <a (click)="settingsModal()">Settings</a>
+          </li>
+          <li *ngIf="loginService.isUserLoggedIn()" [routerLinkActive]="['active']">
             <a [routerLink]="['/logout']">Logout</a>
           </li>
         </ul>

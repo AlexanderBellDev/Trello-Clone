@@ -25,11 +25,16 @@ public class ItemServiceImpl implements ItemService {
 
 
     public boolean deleteItem(Item item) {
-         itemRepository.delete(item);
+        itemRepository.delete(item);
         return itemRepository.findById(item.getId()).isEmpty();
     }
 
     public Item getItemByID(Integer itemID) {
         return itemRepository.findById(itemID).orElse(null);
+    }
+
+    @Override
+    public List<Item> saveListOfItems(List<Item> items) {
+        return itemRepository.saveAll(items);
     }
 }

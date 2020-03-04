@@ -13,4 +13,6 @@ public interface ItemService {
     boolean deleteItem(Item item);
 
     Item getItemByID(Integer itemID);
+
+    List<Item> saveListOfItems(List<Item> items);
 }

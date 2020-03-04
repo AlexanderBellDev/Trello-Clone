@@ -12,18 +12,15 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Item {
-
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
     String username;
-    String itemName;
-    String columnName;
-    String itemDetail;
-    Integer indexNum;
+    String boardColor;
+
 }

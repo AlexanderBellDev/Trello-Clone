@@ -12,6 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+  boxColor: string;
   addToDoItemForm = this.formBuilder.group({
     itemName: ['', [Validators.required]]
   });
@@ -39,6 +40,7 @@ export class BoardComponent implements OnInit {
   username: string;
 
   ngOnInit() {
+    this.boxColor = 'Yellow';
    if(sessionStorage.getItem('authenticatedUser')){
      this.username = sessionStorage.getItem('authenticatedUser');
    }else{
@@ -238,6 +240,7 @@ export class BoardComponent implements OnInit {
   }
 
   //Show and hide delete function
+
   mouseEnter(item: Item) {
     item.delete = true;
   }

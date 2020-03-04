@@ -12,15 +12,16 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
+import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { BoardComponent } from './board/board.component';
+import {BoardComponent} from './board/board.component';
 import {DragDropModule} from "@angular/cdk/drag-drop";
-import { ItemDetailComponent } from './item-detail/item-detail.component';
+import {ItemDetailComponent} from './item-detail/item-detail.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {AuthInterceptorService} from "./service/auth-interceptor.service";
-import { LogoutComponent } from './logout/logout.component';
+import {LogoutComponent} from './logout/logout.component';
+import {SettingsDialogComponent} from './settings-dialog/settings-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LogoutComponent } from './logout/logout.component';
     BoardComponent,
     ItemDetailComponent,
     LogoutComponent,
+    SettingsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { LogoutComponent } from './logout/logout.component';
     MatDialogModule
   ],
   entryComponents: [
-    ItemDetailComponent
+    ItemDetailComponent,
+    SettingsDialogComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }

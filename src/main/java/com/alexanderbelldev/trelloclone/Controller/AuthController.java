@@ -1,15 +1,18 @@
 package com.alexanderbelldev.trelloclone.Controller;
 
 import com.alexanderbelldev.trelloclone.Exception.AppException;
+import com.alexanderbelldev.trelloclone.Model.Board;
 import com.alexanderbelldev.trelloclone.Model.Role;
 import com.alexanderbelldev.trelloclone.Model.RoleName;
 import com.alexanderbelldev.trelloclone.Model.User;
 import com.alexanderbelldev.trelloclone.Payload.ApiResponse;
 import com.alexanderbelldev.trelloclone.Payload.JwtAuthenticationResponse;
+import com.alexanderbelldev.trelloclone.Repository.BoardRepository;
 import com.alexanderbelldev.trelloclone.Repository.RoleRepository;
 import com.alexanderbelldev.trelloclone.Repository.UserRepository;
 import com.alexanderbelldev.trelloclone.Security.JwtTokenProvider;
 import com.alexanderbelldev.trelloclone.Service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,24 +29,16 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:4200","https://trelloclone.cfapps.io"}, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "https://trelloclone.cfapps.io"}, maxAge = 3600, allowCredentials = "true")
+@RequiredArgsConstructor
 public class AuthController {
-    private UserService userService;
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private RoleRepository roleRepository;
-    private AuthenticationManager authenticationManager;
-    private JwtTokenProvider tokenProvider;
-
-    public AuthController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository,
-                          AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-        this.authenticationManager = authenticationManager;
-        this.tokenProvider = tokenProvider;
-    }
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider tokenProvider;
 
 
     //    @CrossOrigin("http://localhost:4200")
@@ -69,15 +64,23 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
-        if(userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
+
+
+        Board board = Board
+                .builder()
+                .boardColor("Red")
+                .username(user.getUsername())
+                .build();
+        boardRepository.save(board);
 
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -88,6 +91,7 @@ public class AuthController {
         user.setRoles(Collections.singleton(userRole));
 
         User result = userRepository.save(user);
+
 
         URI location = ServletUriComponentsBuilder
                 .fromPath("/api/users/{username}")
