@@ -3,16 +3,25 @@
   <div class="form-group">
     <mat-form-field class="full-width-field" color="accent">
       <label>
-        <input formControlName="itemColor" matInput required type="text">
+        <input [value]="color" formControlName="itemColor" matInput required type="text">
+
       </label>
+
       <mat-error *ngIf="boardPropertiesForm.get('itemColor').invalid">Field is required</mat-error>
     </mat-form-field>
+    <button (click)="toggle=!toggle" [(colorPicker)]="color"
+            class="btn-lg" color="primary" mat-raised-button>Change color
+    </button>
   </div>
 
 </form>
+
 
 <div style="justify-content: center; justify-items: center; text-align: center">
   <button (click)="submitBoardProperties()" [disabled]="!boardPropertiesForm.valid" class="btn-lg" color="primary"
           mat-raised-button type="submit">Submit Changes
   </button>
 </div>
+
+
+

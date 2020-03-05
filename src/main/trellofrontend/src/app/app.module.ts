@@ -22,6 +22,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {AuthInterceptorService} from "./service/auth-interceptor.service";
 import {LogoutComponent} from './logout/logout.component';
 import {SettingsDialogComponent} from './settings-dialog/settings-dialog.component';
+import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {SettingsDialogComponent} from './settings-dialog/settings-dialog.compone
     SettingsDialogComponent,
   ],
   imports: [
+    ColorPickerModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,

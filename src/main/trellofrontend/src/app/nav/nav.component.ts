@@ -19,7 +19,7 @@ export class NavComponent implements OnInit {
 
   settingsModal(): void {
     const dialogRef = this.dialog.open(SettingsDialogComponent, {
-      width: '250px'
+      width: '500px'
     });
 
     dialogRef.afterClosed().subscribe(() => {

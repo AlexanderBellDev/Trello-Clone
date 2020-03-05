@@ -13,9 +13,12 @@ export class SettingsDialogComponent implements OnInit {
 
   boardProperties: Board;
 
+
   boardPropertiesForm = this.formBuilder.group({
     itemColor: ['', [Validators.required]]
   });
+  color: any;
+  toggle: any;
 
   constructor(private boardService: BoardService, private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<SettingsDialogComponent>) {
@@ -39,7 +42,7 @@ export class SettingsDialogComponent implements OnInit {
 
 
   submitBoardProperties() {
-    this.boardProperties.boardColor = this.boardPropertiesForm.get('itemColor').value;
+    this.boardProperties.boardColor = this.color;
     this.boardService.submitBoardProperties(this.boardProperties).subscribe(() => {
       this.closeDialog()
     }, error => {
