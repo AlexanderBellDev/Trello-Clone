@@ -1,5 +1,5 @@
 <form [formGroup]="boardPropertiesForm" autocomplete="off" style="align-content: center">
-  <h3>Item color:</h3>
+  <h3>Column background color:</h3>
   <div class="form-group">
     <mat-form-field class="full-width-field" color="accent">
       <label>
@@ -9,7 +9,7 @@
 
       <mat-error *ngIf="boardPropertiesForm.get('itemColor').invalid">Field is required</mat-error>
     </mat-form-field>
-    <button (click)="toggle=!toggle" [(colorPicker)]="color"
+    <button style="margin-left: 2rem " (click)="toggle=!toggle" [(colorPicker)]="color"
             class="btn-lg" color="primary" mat-raised-button>Change color
     </button>
   </div>
