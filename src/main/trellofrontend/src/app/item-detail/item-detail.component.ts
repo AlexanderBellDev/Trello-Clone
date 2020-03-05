@@ -46,6 +46,8 @@ export class ItemDetailComponent implements OnInit {
     itemDetail: ['', []],
     indexNum: ['', [Validators.required]],
   });
+  itemColorFlag: boolean;
+  color: any = '#922f2f';
 
   closeDialog() {
     this.dialogRef.close(this.itemDetail);
@@ -53,6 +55,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   setFormData() {
+
     this.itemDetailForm.patchValue({
       id: this.itemFromDB.id,
       username: this.itemFromDB.username,

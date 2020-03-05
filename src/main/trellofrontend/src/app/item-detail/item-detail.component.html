@@ -15,7 +15,8 @@
     </div>
     <h2>Item Description:</h2>
     <div *ngIf="!detailFlag">
-      <p (click)="detailFlag = true" *ngIf="itemDetailForm.get('itemDetail').value">{{itemDetailForm.get('itemDetail').value}}</p>
+      <p (click)="detailFlag = true"
+         *ngIf="itemDetailForm.get('itemDetail').value">{{itemDetailForm.get('itemDetail').value}}</p>
       <p (click)="detailFlag = true" *ngIf="!itemDetailForm.get('itemDetail').value">Click to add a description...</p>
 
     </div>
@@ -25,6 +26,13 @@
         <textarea matInput formControlName="itemDetail"></textarea>
       </mat-form-field>
     </div>
+
+
+    <h2>Item Color:</h2>
+    <div [(colorPicker)]="color" [cpPresetColors]="[color]" [ngStyle]="{'background':color}" style="width: 10%;">
+      <h4>k{{color}}</h4>
+    </div>
+
 
     <br>
 
