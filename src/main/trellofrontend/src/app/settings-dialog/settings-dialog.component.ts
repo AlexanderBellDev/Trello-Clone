@@ -27,6 +27,7 @@ export class SettingsDialogComponent implements OnInit {
   ngOnInit() {
     this.boardService.getBoardProperties().subscribe(data => {
       this.boardProperties = data;
+      this.color = data.boardColor;
       this.boardPropertiesForm.patchValue({
         itemColor: this.boardProperties.boardColor
       });

@@ -26,6 +26,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public Item saveItem(Item item) {
+        if (item.getItemColor() == null) {
+            item.setItemColor("Blue");
+        }
         return itemRepository.save(item);
     }
 

@@ -23,6 +23,7 @@ public class Item {
     Integer id;
     String username;
     String itemName;
+    String itemColor;
     String columnName;
     String itemDetail;
     Integer indexNum;

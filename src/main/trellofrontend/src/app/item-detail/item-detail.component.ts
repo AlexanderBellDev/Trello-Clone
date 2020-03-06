@@ -12,6 +12,7 @@ import {BoardService} from "../service/board.service";
 export class ItemDetailComponent implements OnInit {
   detailFlag = false;
   nameFlag = false;
+  color: any = '';
   itemDetail: Item;
 
   constructor(
@@ -31,6 +32,7 @@ export class ItemDetailComponent implements OnInit {
         console.log(data.id);
         this.itemFromDB = data;
         this.setFormData();
+        this.color = data.itemColor;
       },
       error => {
         console.log("Error", error);
@@ -47,8 +49,6 @@ export class ItemDetailComponent implements OnInit {
     indexNum: ['', [Validators.required]],
   });
   itemColorFlag: boolean;
-  color: any = '#922f2f';
-
   closeDialog() {
     this.dialogRef.close(this.itemDetail);
     // window.location.reload();
@@ -68,6 +68,7 @@ export class ItemDetailComponent implements OnInit {
 
   onSubmit() {
     this.itemDetail = this.itemDetailForm.value;
+    this.itemDetail.itemColor = this.color;
     this.saveItem(this.itemDetail);
   }
 
